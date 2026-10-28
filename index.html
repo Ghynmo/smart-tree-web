@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="id" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#12131f" />
+    <title>Smart Tree</title>
+  </head>
+  <body>
+    <!-- Shared ornaments (8-point khatam star, leaf). Referenced with <use href="#…">. -->
+    <svg class="sprite" aria-hidden="true">
+      <symbol id="khatam" viewBox="0 0 48 48">
+        <path d="M24 0L31.03 7.03L40.97 7.03L40.97 16.97L48 24L40.97 31.03L40.97 40.97L31.03 40.97L24 48L16.97 40.97L7.03 40.97L7.03 31.03L0 24L7.03 16.97L7.03 7.03L16.97 7.03Z" />
+      </symbol>
+      <symbol id="leaf" viewBox="0 0 24 24">
+        <path d="M5 19c0-8 5.5-13 14-14-.5 8.5-5.5 14-14 14zm0 0l8-8" />
+      </symbol>
+    </svg>
+
+    <!-- Dusk sky behind the transparent 3D canvas; the intro shows the Arafah illustration (src/ui/backdrop.js). -->
+    <div class="backdrop" aria-hidden="true">
+      <div class="backdrop__sky"></div>
+      <div class="backdrop__stars"></div>
+      <img class="backdrop__hero" src="/art/hero.svg" alt="" width="1600" height="900" decoding="async" />
+      <div class="backdrop__vignette"></div>
+    </div>
+
+    <div id="app"></div>
+
+    <!-- Covers the canvas until the core modules (load phase 0) are ready; the top bar stays usable above it. -->
+    <section class="loading" aria-busy="true">
+      <div class="loading__card">
+        <svg class="loading__star" viewBox="-2 -2 52 52" aria-hidden="true">
+          <path class="loading__star-track" d="M24 0L31.03 7.03L40.97 7.03L40.97 16.97L48 24L40.97 31.03L40.97 40.97L31.03 40.97L24 48L16.97 40.97L7.03 40.97L7.03 31.03L0 24L7.03 16.97L7.03 7.03L16.97 7.03Z" />
+          <path class="loading__star-fill" pathLength="100" d="M24 0L31.03 7.03L40.97 7.03L40.97 16.97L48 24L40.97 31.03L40.97 40.97L31.03 40.97L24 48L16.97 40.97L7.03 40.97L7.03 31.03L0 24L7.03 16.97L7.03 7.03L16.97 7.03Z" />
+        </svg>
+        <div class="loading__brand" data-i18n="meta.brand"></div>
+        <div class="loading__status" aria-live="polite"></div>
+        <div class="loading__bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" data-i18n-attr="aria-label:loading.label">
+          <div class="loading__fill"></div>
+        </div>
+        <bdi class="loading__percent" dir="ltr"></bdi>
+        <button type="button" class="loading__retry button button--primary" data-i18n="loading.retry" hidden></button>
+      </div>
+    </section>
+
+    <!-- Without WebGL: a still poster instead of the 3D stage (src/ui/fallback.js). -->
+    <section class="fallback" hidden>
+      <img class="fallback__poster" src="/fallback/poster.webp" width="1600" height="1000" data-i18n-attr="alt:fallback.alt" />
+      <div class="fallback__card panel">
+        <h1 class="fallback__title" data-i18n="fallback.title"></h1>
+        <p class="fallback__text" data-i18n="fallback.text"></p>
+      </div>
+    </section>
+
+    <!-- WebGL context lost: shown until the browser restores it (src/ui/contextNotice.js). -->
+    <div class="context-notice" role="alert" hidden>
+      <span class="context-notice__text" data-i18n="contextLost.text"></span>
+      <button type="button" class="context-notice__reload button button--primary" data-i18n="loading.retry" hidden></button>
+    </div>
+
+    <!-- HTML overlay. No visible text here: every string comes from src/i18n/locales via data-i18n. -->
+    <div id="ui">
+      <header class="topbar">
+        <div class="brand">
+          <svg class="brand__mark" viewBox="-3 -3 54 54" aria-hidden="true">
+            <use href="#khatam" class="brand__star" />
+            <use href="#leaf" class="brand__leaf" x="13" y="13" width="22" height="22" />
+          </svg>
+          <div class="brand__text">
+            <span class="brand__name" data-i18n="meta.brand"></span>
+            <span class="brand__tagline" data-i18n="meta.tagline"></span>
+          </div>
+        </div>
+        <div class="topbar__end">
+          <!-- Graphics quality: Auto / Smooth / HD (src/ui/qualitySwitch.js); a change reloads the page. -->
+          <div class="quality-menu">
+            <button type="button" class="quality-menu__button panel" aria-haspopup="true" aria-expanded="false">
+              <svg class="quality-menu__icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M4 17a8 8 0 1 1 16 0M12 17l4-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+              </svg>
+              <span class="quality-menu__current"></span>
+            </button>
+            <div class="quality-menu__list panel" role="menu" hidden>
+              <div class="quality-menu__title" data-i18n="quality.label"></div>
+              <div class="quality-menu__items"></div>
+              <p class="quality-menu__note" data-i18n="quality.note"></p>
+            </div>
+          </div>
+          <div class="lang-switch panel" role="group" data-i18n-attr="aria-label:lang.label">
+            <span class="lang-switch__pill" aria-hidden="true"></span>
+          </div>
+        </div>
+      </header>
+
+      <!-- Narrative card of the current chapter (content from the chapter definition + i18n).
+           In the intro it becomes the centered hero over the illustration, with a start button. -->
+      <section class="story-card panel" aria-live="polite" hidden>
+        <svg class="story-card__arch" viewBox="0 0 400 24" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M0 24C0 18 4 14 12 14h160c12 0 20-4 28-14 8 10 16 14 28 14h160c8 0 12 4 12 10" />
+        </svg>
+        <div class="story-card__kicker"></div>
+        <h1 class="story-card__title"></h1>
+        <div class="story-card__body"></div>
+        <ul class="story-card__points" hidden></ul>
+        <p class="story-card__hint" hidden></p>
+        <button type="button" class="story-card__more" hidden></button>
+        <button type="button" class="story-card__cta button button--primary" hidden>
+          <span data-i18n="story.start"></span>
+          <svg class="icon-arrow" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </button>
+      </section>
+
+      <!-- IoT dashboard (chapter e). SIMULATED data: the "Data demo" badge in the header and on every
+           card is mandatory (src/ui/demoBadge.js). Cards are built by src/ui/dashboard.js. -->
+      <section class="dashboard panel" aria-labelledby="dashboard-title" hidden>
+        <header class="dashboard__header">
+          <div>
+            <h2 id="dashboard-title" class="dashboard__title" data-i18n="dashboard.title"></h2>
+            <div class="dashboard__clock"></div>
+          </div>
+          <div class="dashboard__badge"></div>
+        </header>
+        <div class="dashboard__grid"></div>
+        <p class="dashboard__note" data-i18n="dashboard.note"></p>
+      </section>
+
+      <!-- Roadmap (chapter f). Items still in research carry the mandatory "Tahap R&D" badge and
+           have no 3D model. Groups and items are built by src/ui/roadmap.js. -->
+      <section class="roadmap panel" aria-labelledby="roadmap-title" hidden>
+        <h2 id="roadmap-title" class="roadmap__title" data-i18n="roadmap.title"></h2>
+        <div class="roadmap__groups"></div>
+        <footer class="roadmap__closing">
+          <svg class="roadmap__seal" viewBox="-3 -3 54 54" aria-hidden="true"><use href="#khatam" /></svg>
+          <div>
+            <div class="roadmap__vision" data-i18n="roadmap.vision"></div>
+            <div class="roadmap__tagline" data-i18n="meta.tagline"></div>
+          </div>
+        </footer>
+      </section>
+
+      <!-- Info for the selected module (side panel; bottom sheet on phones). -->
+      <aside class="info-panel panel" role="dialog" aria-labelledby="info-title" hidden>
+        <button type="button" class="info-panel__close icon-button" data-i18n-attr="aria-label:info.close;title:info.close">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          </svg>
+        </button>
+        <span class="info-panel__pillar"></span>
+        <h2 id="info-title" class="info-panel__title"></h2>
+        <p class="info-panel__body"></p>
+      </aside>
+
+      <main class="stage">
+        <!-- Explode/assemble toggle; shown only in the assembly chapter. -->
+        <button type="button" class="assembly-toggle button button--glass" aria-pressed="false" hidden></button>
+        <!-- Background loading of the remaining modules (after the loading screen is gone). -->
+        <div class="load-status" role="status" hidden></div>
+      </main>
+
+      <nav class="chapter-nav panel" data-i18n-attr="aria-label:nav.label">
+        <button type="button" class="icon-button" data-action="prev" data-i18n-attr="aria-label:nav.prev">
+          <svg class="icon-arrow icon-arrow--back" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </button>
+        <div class="chapter-nav__label" aria-live="polite">
+          <div class="chapter-nav__meta">
+            <span class="chapter-nav__count"></span>
+            <span class="chapter-nav__title"></span>
+          </div>
+          <div class="chapter-nav__rail"></div>
+        </div>
+        <button type="button" class="icon-button" data-action="next" data-i18n-attr="aria-label:nav.next">
+          <svg class="icon-arrow" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </button>
+        <!-- Auto tour play/pause (also the T key). Labels come from ui/tourButton.js. -->
+        <button type="button" class="tour-toggle" aria-pressed="false">
+          <svg class="tour-toggle__play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor" /></svg>
+          <svg class="tour-toggle__pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.5 5.5h3v13h-3zM13.5 5.5h3v13h-3z" fill="currentColor" /></svg>
+          <span class="tour-toggle__label"></span>
+        </button>
+      </nav>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

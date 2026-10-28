@@ -1,0 +1,128 @@
+{
+  "_meta": {
+    "note": "MANUAL. Closed-loop water path for chapter (d), in tree space (meters, same space as assembly.json slot positions). Measured against the trunk/branch geometry in Tahap 10.",
+    "flow": "Tandon → pompa → modul tanaman/akar → return (kembali ke tandon), per docs/business_plan.md §4.",
+    "segments": "Polylines, smoothed at runtime (centripetal Catmull-Rom). Each segment is drawn once as a tube; dashes move from its first to its last point.",
+    "routes": "Ordered segment ids a drop travels, tank to tank. Consecutive segments must meet: last point of one = first point of the next.",
+    "layout": "Supply rises in the trunk center through green_tank (pump) to the distribution_pipe hub, splits into side risers inside the trunk wall (x ±0.085), feeds each branch root (inside the log, x ±0.18), drains back to a return column in the back wall (z -0.085) and down into the tank."
+  },
+  "segments": {
+    "supply": [
+      [0, 0.2, 0],
+      [0, 0.3, 0],
+      [0, 0.37, 0],
+      [0, 0.445, 0]
+    ],
+    "riser_left_low": [
+      [0, 0.445, 0],
+      [-0.08, 0.445, 0],
+      [-0.085, 0.5, -0.02],
+      [-0.085, 0.58, -0.02]
+    ],
+    "riser_left_high": [
+      [-0.085, 0.58, -0.02],
+      [-0.085, 0.77, -0.02],
+      [-0.085, 0.96, -0.02]
+    ],
+    "riser_right_low": [
+      [0, 0.445, 0],
+      [0.08, 0.445, 0],
+      [0.085, 0.5, -0.02],
+      [0.085, 0.58, -0.02]
+    ],
+    "riser_right_high": [
+      [0.085, 0.58, -0.02],
+      [0.085, 0.77, -0.02],
+      [0.085, 0.96, -0.02]
+    ],
+    "feed_grape": [
+      [-0.085, 0.58, -0.02],
+      [-0.132, 0.58, 0],
+      [-0.18, 0.58, 0.01]
+    ],
+    "feed_apple": [
+      [-0.085, 0.96, -0.02],
+      [-0.132, 0.962, 0],
+      [-0.18, 0.965, 0.01]
+    ],
+    "feed_orange": [
+      [0.085, 0.58, -0.02],
+      [0.133, 0.583, 0],
+      [0.18, 0.585, 0.01]
+    ],
+    "feed_mango": [
+      [0.085, 0.96, -0.02],
+      [0.133, 0.972, 0],
+      [0.18, 0.985, 0.01]
+    ],
+    "drain_grape": [
+      [-0.18, 0.58, 0.01],
+      [-0.13, 0.565, -0.045],
+      [-0.06, 0.55, -0.08],
+      [0, 0.55, -0.085]
+    ],
+    "drain_apple": [
+      [-0.18, 0.965, 0.01],
+      [-0.13, 0.938, -0.045],
+      [-0.06, 0.91, -0.08],
+      [0, 0.91, -0.085]
+    ],
+    "drain_orange": [
+      [0.18, 0.585, 0.01],
+      [0.13, 0.568, -0.045],
+      [0.06, 0.55, -0.08],
+      [0, 0.55, -0.085]
+    ],
+    "drain_mango": [
+      [0.18, 0.985, 0.01],
+      [0.13, 0.948, -0.045],
+      [0.06, 0.91, -0.08],
+      [0, 0.91, -0.085]
+    ],
+    "return_high": [
+      [0, 0.91, -0.085],
+      [0, 0.73, -0.085],
+      [0, 0.55, -0.085]
+    ],
+    "return_low": [
+      [0, 0.55, -0.085],
+      [0, 0.42, -0.085],
+      [0, 0.36, -0.04],
+      [0, 0.3, -0.03]
+    ]
+  },
+  "routes": {
+    "branch_grape": [
+      "supply",
+      "riser_left_low",
+      "feed_grape",
+      "drain_grape",
+      "return_low"
+    ],
+    "branch_apple": [
+      "supply",
+      "riser_left_low",
+      "riser_left_high",
+      "feed_apple",
+      "drain_apple",
+      "return_high",
+      "return_low"
+    ],
+    "branch_orange": [
+      "supply",
+      "riser_right_low",
+      "feed_orange",
+      "drain_orange",
+      "return_low"
+    ],
+    "branch_mango": [
+      "supply",
+      "riser_right_low",
+      "riser_right_high",
+      "feed_mango",
+      "drain_mango",
+      "return_high",
+      "return_low"
+    ]
+  }
+}

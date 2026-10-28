@@ -1,0 +1,383 @@
+{
+  "_meta": {
+    "generatedBy": "scripts/build-manifest.mjs",
+    "note": "GENERATED — do not edit by hand. Rerun `npm run models:manifest`.",
+    "units": "raw model units (Meshy-normalized, longest axis ≈ 1.9); real-world size comes from assembly.json"
+  },
+  "modules": {
+    "battery": {
+      "desktop": {
+        "url": "/models/desktop/battery.glb",
+        "bytes": 510768,
+        "tris": 16343
+      },
+      "mobile": {
+        "url": "/models/mobile/battery.glb",
+        "bytes": 510768,
+        "tris": 16343
+      },
+      "bounds": {
+        "min": {
+          "x": -0.808,
+          "y": -0.9518,
+          "z": -0.4646
+        },
+        "max": {
+          "x": 0.8079,
+          "y": 0.9507,
+          "z": 0.464
+        },
+        "size": {
+          "x": 1.6159,
+          "y": 1.9025,
+          "z": 0.9286
+        }
+      },
+      "pivotOffset": {
+        "x": 0.0001,
+        "y": 0.9518,
+        "z": 0.0003
+      }
+    },
+    "branch_apple": {
+      "desktop": {
+        "url": "/models/desktop/branch_apple.glb",
+        "bytes": 1189308,
+        "tris": 99972
+      },
+      "mobile": {
+        "url": "/models/mobile/branch_apple.glb",
+        "bytes": 713480,
+        "tris": 39888
+      },
+      "bounds": {
+        "min": {
+          "x": -0.949,
+          "y": -0.4868,
+          "z": -0.4478
+        },
+        "max": {
+          "x": 0.9511,
+          "y": 0.5003,
+          "z": 0.4465
+        },
+        "size": {
+          "x": 1.9001,
+          "y": 0.9871,
+          "z": 0.8942
+        }
+      },
+      "pivotOffset": {
+        "x": -0.001,
+        "y": 0.4868,
+        "z": 0.0007
+      }
+    },
+    "branch_grape": {
+      "desktop": {
+        "url": "/models/desktop/branch_grape.glb",
+        "bytes": 1359772,
+        "tris": 99730
+      },
+      "mobile": {
+        "url": "/models/mobile/branch_grape.glb",
+        "bytes": 844656,
+        "tris": 39766
+      },
+      "bounds": {
+        "min": {
+          "x": -0.9518,
+          "y": -0.5534,
+          "z": -0.3267
+        },
+        "max": {
+          "x": 0.9498,
+          "y": 0.5387,
+          "z": 0.3375
+        },
+        "size": {
+          "x": 1.9016,
+          "y": 1.0921,
+          "z": 0.6642
+        }
+      },
+      "pivotOffset": {
+        "x": 0.001,
+        "y": 0.5534,
+        "z": -0.0054
+      }
+    },
+    "branch_mango": {
+      "desktop": {
+        "url": "/models/desktop/branch_mango.glb",
+        "bytes": 1177796,
+        "tris": 99872
+      },
+      "mobile": {
+        "url": "/models/mobile/branch_mango.glb",
+        "bytes": 677876,
+        "tris": 39892
+      },
+      "bounds": {
+        "min": {
+          "x": -0.9521,
+          "y": -0.5377,
+          "z": -0.5552
+        },
+        "max": {
+          "x": 0.9494,
+          "y": 0.5349,
+          "z": 0.5407
+        },
+        "size": {
+          "x": 1.9015,
+          "y": 1.0725,
+          "z": 1.096
+        }
+      },
+      "pivotOffset": {
+        "x": 0.0014,
+        "y": 0.5377,
+        "z": 0.0073
+      }
+    },
+    "branch_orange": {
+      "desktop": {
+        "url": "/models/desktop/branch_orange.glb",
+        "bytes": 1154392,
+        "tris": 99952
+      },
+      "mobile": {
+        "url": "/models/mobile/branch_orange.glb",
+        "bytes": 688836,
+        "tris": 39940
+      },
+      "bounds": {
+        "min": {
+          "x": -0.9513,
+          "y": -0.5314,
+          "z": -0.4207
+        },
+        "max": {
+          "x": 0.9507,
+          "y": 0.5674,
+          "z": 0.4243
+        },
+        "size": {
+          "x": 1.902,
+          "y": 1.0988,
+          "z": 0.845
+        }
+      },
+      "pivotOffset": {
+        "x": 0.0003,
+        "y": 0.5314,
+        "z": -0.0018
+      }
+    },
+    "distribution_pipe": {
+      "desktop": {
+        "url": "/models/desktop/distribution_pipe.glb",
+        "bytes": 565256,
+        "tris": 39948
+      },
+      "mobile": {
+        "url": "/models/mobile/distribution_pipe.glb",
+        "bytes": 417104,
+        "tris": 19960
+      },
+      "bounds": {
+        "min": {
+          "x": -0.9515,
+          "y": -0.3258,
+          "z": -0.9503
+        },
+        "max": {
+          "x": 0.9506,
+          "y": 0.326,
+          "z": 0.9497
+        },
+        "size": {
+          "x": 1.9021,
+          "y": 0.6518,
+          "z": 1.9
+        }
+      },
+      "pivotOffset": {
+        "x": 0.0005,
+        "y": 0.3258,
+        "z": 0.0003
+      }
+    },
+    "green_tank": {
+      "desktop": {
+        "url": "/models/desktop/green_tank.glb",
+        "bytes": 564520,
+        "tris": 19760
+      },
+      "mobile": {
+        "url": "/models/mobile/green_tank.glb",
+        "bytes": 564520,
+        "tris": 19760
+      },
+      "bounds": {
+        "min": {
+          "x": -0.6615,
+          "y": -0.9513,
+          "z": -0.6516
+        },
+        "max": {
+          "x": 0.6636,
+          "y": 0.9505,
+          "z": 0.6505
+        },
+        "size": {
+          "x": 1.325,
+          "y": 1.9018,
+          "z": 1.3021
+        }
+      },
+      "pivotOffset": {
+        "x": -0.001,
+        "y": 0.9513,
+        "z": 0.0005
+      }
+    },
+    "nutrient_tank": {
+      "desktop": {
+        "url": "/models/desktop/nutrient_tank.glb",
+        "bytes": 757228,
+        "tris": 28287
+      },
+      "mobile": {
+        "url": "/models/mobile/nutrient_tank.glb",
+        "bytes": 608460,
+        "tris": 19986
+      },
+      "bounds": {
+        "min": {
+          "x": -0.7841,
+          "y": -0.9517,
+          "z": -0.7856
+        },
+        "max": {
+          "x": 0.7812,
+          "y": 0.95,
+          "z": 0.7834
+        },
+        "size": {
+          "x": 1.5653,
+          "y": 1.9017,
+          "z": 1.569
+        }
+      },
+      "pivotOffset": {
+        "x": 0.0015,
+        "y": 0.9517,
+        "z": 0.0011
+      }
+    },
+    "solar_panel": {
+      "desktop": {
+        "url": "/models/desktop/solar_panel.glb",
+        "bytes": 730052,
+        "tris": 20284
+      },
+      "mobile": {
+        "url": "/models/mobile/solar_panel.glb",
+        "bytes": 726404,
+        "tris": 20000
+      },
+      "bounds": {
+        "min": {
+          "x": -0.9501,
+          "y": -0.3979,
+          "z": -0.3355
+        },
+        "max": {
+          "x": 0.9503,
+          "y": 0.39,
+          "z": 0.3153
+        },
+        "size": {
+          "x": 1.9004,
+          "y": 0.7879,
+          "z": 0.6508
+        }
+      },
+      "pivotOffset": {
+        "x": -0.0001,
+        "y": 0.3979,
+        "z": 0.0101
+      }
+    },
+    "tree_crown": {
+      "desktop": {
+        "url": "/models/desktop/tree_crown.glb",
+        "bytes": 2790392,
+        "tris": 148610
+      },
+      "mobile": {
+        "url": "/models/mobile/tree_crown.glb",
+        "bytes": 1743076,
+        "tris": 68910
+      },
+      "bounds": {
+        "min": {
+          "x": -0.9549,
+          "y": -0.6213,
+          "z": -0.9265
+        },
+        "max": {
+          "x": 0.945,
+          "y": 0.6259,
+          "z": 0.9186
+        },
+        "size": {
+          "x": 1.8998,
+          "y": 1.2472,
+          "z": 1.8451
+        }
+      },
+      "pivotOffset": {
+        "x": 0.0049,
+        "y": 0.6213,
+        "z": 0.0039
+      }
+    },
+    "trunk_base": {
+      "desktop": {
+        "url": "/models/desktop/trunk_base.glb",
+        "bytes": 724664,
+        "tris": 59940
+      },
+      "mobile": {
+        "url": "/models/mobile/trunk_base.glb",
+        "bytes": 524796,
+        "tris": 29944
+      },
+      "bounds": {
+        "min": {
+          "x": -0.64,
+          "y": -0.9522,
+          "z": -0.6264
+        },
+        "max": {
+          "x": 0.6388,
+          "y": 0.9512,
+          "z": 0.624
+        },
+        "size": {
+          "x": 1.2788,
+          "y": 1.9034,
+          "z": 1.2504
+        }
+      },
+      "pivotOffset": {
+        "x": 0.0006,
+        "y": 0.9522,
+        "z": 0.0012
+      }
+    }
+  }
+}

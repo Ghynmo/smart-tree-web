@@ -1,0 +1,286 @@
+{
+  "meta": {
+    "title": "Smart Tree — Arafah Green Legacy",
+    "brand": "Smart Tree",
+    "tagline": "Smart Tree: Green Arafah, Brighter Tomorrow"
+  },
+  "lang": {
+    "label": "Bahasa",
+    "short": {
+      "id": "ID",
+      "en": "EN",
+      "ar": "ع"
+    },
+    "names": {
+      "id": "Bahasa Indonesia",
+      "en": "English",
+      "ar": "العربية"
+    }
+  },
+  "quality": {
+    "label": "Kualitas grafis",
+    "auto": "Otomatis",
+    "low": "Lancar",
+    "high": "HD",
+    "autoHint": "Dipilih sesuai perangkat (sekarang: {tier})",
+    "lowHint": "Ringan dan mulus untuk HP dan laptop lama",
+    "highHint": "Detail penuh untuk perangkat dengan GPU kuat",
+    "note": "Halaman dimuat ulang di bab yang sama."
+  },
+  "nav": {
+    "label": "Navigasi bab",
+    "prev": "Bab sebelumnya",
+    "next": "Bab berikutnya",
+    "chapterOf": "Bab {current} dari {total}"
+  },
+  "chapters": {
+    "intro": "Arafah Green Legacy",
+    "reveal": "Mengenal Smart Tree",
+    "assembly": "Perakitan Modular",
+    "water": "Sirkulasi Air Tertutup",
+    "dashboard": "Dashboard IoT",
+    "roadmap": "Peta Jalan"
+  },
+  "modules": {
+    "trunk_base": {
+      "name": "Batang Utama",
+      "desc": "Struktur utama yang dirakit bertingkat seperti Lego, dengan sambungan male-female tersembunyi yang menyatu dengan tekstur kayu. Mudah dibongkar, dipindahkan, dan dirakit kembali. Rongganya menampung modul teknologi."
+    },
+    "green_tank": {
+      "name": "Tandon Air",
+      "desc": "Tandon air pada sistem sirkulasi tertutup. Air dipompa dari tandon ke modul tanaman dan akar, lalu kembali ke tandon, sehingga air lebih hemat di lingkungan kering."
+    },
+    "distribution_pipe": {
+      "name": "Pipa Distribusi",
+      "desc": "Menyalurkan air dari pompa ke modul tanaman dan akar sebagai bagian dari sirkulasi air tertutup."
+    },
+    "nutrient_tank": {
+      "name": "Tandon Nutrisi A & B",
+      "desc": "Tandon nutrisi A dan B. Kadar nutrisi dipantau lewat konduktivitas elektrik (EC), dengan target sekitar {ec}."
+    },
+    "battery": {
+      "name": "Baterai & Charge Controller",
+      "desc": "Menyimpan energi untuk sistem pintar Smart Tree. Status baterai dan daya panel surya dipantau lewat IoT."
+    },
+    "tree_crown": {
+      "name": "Kanopi",
+      "desc": "Kanopi hijau yang menciptakan area berteduh yang asri dan sejuk bagi jamaah, pengunjung, dan wisatawan."
+    },
+    "solar_panel": {
+      "name": "Panel Surya",
+      "desc": "Panel surya {power} sebagai sumber energi sistem pintar Smart Tree, mendukung efisiensi energi."
+    },
+    "branch_apple": {
+      "name": "Cabang Apel",
+      "desc": "Modul tanaman apel. Satu Smart Tree dapat menampung beberapa jenis tanaman, yang dipilih berdasarkan analisis kebutuhan biologis dan pengujian."
+    },
+    "branch_mango": {
+      "name": "Cabang Mangga",
+      "desc": "Modul tanaman mangga. Satu Smart Tree dapat menampung beberapa jenis tanaman, yang dipilih berdasarkan analisis kebutuhan biologis dan pengujian."
+    },
+    "branch_grape": {
+      "name": "Cabang Anggur",
+      "desc": "Modul tanaman anggur. Satu Smart Tree dapat menampung beberapa jenis tanaman, yang dipilih berdasarkan analisis kebutuhan biologis dan pengujian."
+    },
+    "branch_orange": {
+      "name": "Cabang Jeruk",
+      "desc": "Modul tanaman jeruk. Satu Smart Tree dapat menampung beberapa jenis tanaman, yang dipilih berdasarkan analisis kebutuhan biologis dan pengujian."
+    }
+  },
+  "loading": {
+    "label": "Progres memuat",
+    "core": "Menyiapkan modul inti…",
+    "background": "Memuat detail {percent}",
+    "error": "Model 3D gagal dimuat. Periksa koneksi, lalu muat ulang.",
+    "partialError": "Sebagian model gagal dimuat",
+    "retry": "Muat ulang"
+  },
+  "assembly": {
+    "explode": "Bongkar modul",
+    "assemble": "Rakit kembali"
+  },
+  "pillars": {
+    "plant": "Living Plant",
+    "structure": "Modular Structure",
+    "tech": "Smart Technology"
+  },
+  "units": {
+    "watt": "W",
+    "msPerCm": "mS/cm",
+    "cm": "cm",
+    "celsius": "°C",
+    "percent": "%"
+  },
+  "info": {
+    "close": "Tutup panel info"
+  },
+  "story": {
+    "intro": {
+      "kicker": "Arafah Green Legacy",
+      "title": "Menghijaukan Arafah",
+      "body1": "Visi kami: lingkungan yang lebih hijau, nyaman, teduh, dan menyegarkan bagi jamaah haji dan umrah, pengunjung, serta wisatawan di Arafah.",
+      "body2": "Terinspirasi kisah “Pohon Soekarno”, program penghijauan Arafah oleh Presiden Soekarno pada tahun 1955, yang kini diteruskan dengan teknologi modern."
+    },
+    "reveal": {
+      "kicker": "Smart Tree",
+      "title": "Living Plant + Modular Structure + Smart Technology",
+      "body1": "Pohon modular cerdas berbasis IoT dan hidroponik untuk penghijauan daerah panas dan kering.",
+      "points": {
+        "modular": {
+          "title": "Modular",
+          "text": "Dirakit bertingkat seperti Lego."
+        },
+        "living": {
+          "title": "Living",
+          "text": "Mendukung pertumbuhan tanaman hidup secara nyata."
+        },
+        "movable": {
+          "title": "Movable",
+          "text": "Mudah dibongkar, dipindahkan, dan dirakit kembali."
+        }
+      },
+      "hint": "Arahkan kursor atau ketuk modul untuk melihat detailnya."
+    },
+    "assembly": {
+      "kicker": "Modular Structure",
+      "title": "Dirakit seperti Lego",
+      "body1": "Setiap modul terpasang lewat sambungan male-female tersembunyi yang menyatu dengan tekstur kayu, sehingga pohon mudah dibongkar, dipindahkan, dan dirakit kembali.",
+      "body2": "Tinggi standar rekomendasi: {height}.",
+      "hint": "Tekan “Rakit kembali” untuk melihat modul terpasang satu per satu."
+    },
+    "water": {
+      "kicker": "Smart Water System",
+      "title": "Sirkulasi air tertutup",
+      "body1": "Air bersirkulasi dalam sistem tertutup (closed loop) untuk efisiensi air di lingkungan yang kering.",
+      "steps": {
+        "tank": {
+          "title": "Tandon",
+          "text": "Air disimpan di tandon pada dasar batang."
+        },
+        "pump": {
+          "title": "Pompa",
+          "text": "Pompa mengalirkan air naik melalui pipa distribusi."
+        },
+        "roots": {
+          "title": "Akar",
+          "text": "Air sampai ke modul tanaman dan akarnya di setiap cabang."
+        },
+        "return": {
+          "title": "Return",
+          "text": "Air kembali turun ke tandon untuk diedarkan lagi."
+        }
+      }
+    },
+    "more": "Selengkapnya",
+    "less": "Ringkas",
+    "start": "Mulai jelajah"
+  },
+  "dashboard": {
+    "title": "Dashboard IoT",
+    "clock": "Waktu simulasi {time}",
+    "metrics": {
+      "temperature": "Suhu",
+      "humidity": "Kelembapan",
+      "ph": "pH air",
+      "ec": "Nutrisi (EC)",
+      "waterLevel": "Level air",
+      "battery": "Baterai",
+      "solar": "Daya panel surya",
+      "pump": "Pompa",
+      "plant": "Status tanaman"
+    },
+    "max": "maks. {max}",
+    "pump": {
+      "on": "ON",
+      "off": "OFF",
+      "toggle": "Nyalakan atau matikan pompa"
+    },
+    "plant": {
+      "good": "Sehat",
+      "attention": "Perlu perhatian"
+    },
+    "note": "Semua nilai adalah simulasi untuk demonstrasi, bukan data sensor nyata."
+  },
+  "roadmap": {
+    "title": "Peta Jalan Smart Tree",
+    "vision": "Arafah Green Legacy",
+    "groups": {
+      "core": {
+        "title": "Desain inti",
+        "text": "Fondasi Smart Tree yang ditampilkan dalam model 3D ini."
+      },
+      "app": {
+        "title": "Fitur aplikasi",
+        "text": "Fitur tambahan pada aplikasi pemantauan Smart Tree."
+      },
+      "rnd": {
+        "title": "Riset & pengembangan",
+        "text": "Masih dalam tahap riset dan belum menjadi fitur yang berjalan."
+      }
+    },
+    "items": {
+      "core": {
+        "modular": {
+          "title": "Struktur modular",
+          "text": "Dirakit bertingkat seperti Lego; mudah dibongkar, dipindahkan, dan dirakit kembali."
+        },
+        "water": {
+          "title": "Sirkulasi air tertutup",
+          "text": "Tandon → pompa → modul tanaman dan akar → kembali ke tandon."
+        },
+        "iot": {
+          "title": "Sensor & otomatisasi IoT",
+          "text": "Sensor membaca parameter dan mengaktifkan sistem secara otomatis, misalnya penyiraman."
+        },
+        "solar": {
+          "title": "Energi surya",
+          "text": "Panel surya {power} dengan pemantauan status baterai."
+        },
+        "plants": {
+          "title": "Modul tanaman",
+          "text": "Satu pohon untuk beberapa jenis tanaman, seperti mangga, jeruk, apel, dan anggur."
+        }
+      },
+      "app": {
+        "nutrients": {
+          "title": "Monitoring nutrisi & indikator air"
+        },
+        "camera": {
+          "title": "Kamera monitoring"
+        },
+        "chat": {
+          "title": "Chat IoT"
+        },
+        "health": {
+          "title": "Status kesehatan tanaman"
+        }
+      },
+      "rnd": {
+        "awg": {
+          "title": "AWG / Penangkap Embun",
+          "text": "Atmospheric Water Generator untuk menangkap air dari udara."
+        },
+        "recovery": {
+          "title": "Water Recovery & Transpirasi",
+          "text": "Memanfaatkan kembali air hasil kondensasi transpirasi tanaman."
+        }
+      }
+    }
+  },
+  "tour": {
+    "play": "Tur otomatis",
+    "pause": "Jeda tur"
+  },
+  "fallback": {
+    "title": "Tampilan 3D tidak tersedia",
+    "text": "Browser atau perangkat ini tidak mendukung WebGL, jadi model 3D interaktif tidak bisa ditampilkan. Gambar ini memperlihatkan Smart Tree; buka di Chrome, Edge, atau Safari versi terbaru untuk versi interaktif.",
+    "alt": "Smart Tree: pohon modular dengan modul teknologi di dalam batang, kanopi, panel surya, dan cabang apel, mangga, anggur, serta jeruk."
+  },
+  "contextLost": {
+    "text": "Memulihkan tampilan 3D…"
+  },
+  "badges": {
+    "demo": "Data demo",
+    "rnd": "Tahap R&D"
+  }
+}

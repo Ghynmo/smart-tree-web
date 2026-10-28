@@ -1,0 +1,286 @@
+{
+  "meta": {
+    "title": "Smart Tree — Arafah Green Legacy",
+    "brand": "Smart Tree",
+    "tagline": "Smart Tree: Green Arafah, Brighter Tomorrow"
+  },
+  "lang": {
+    "label": "Language",
+    "short": {
+      "id": "ID",
+      "en": "EN",
+      "ar": "ع"
+    },
+    "names": {
+      "id": "Bahasa Indonesia",
+      "en": "English",
+      "ar": "العربية"
+    }
+  },
+  "quality": {
+    "label": "Graphics quality",
+    "auto": "Auto",
+    "low": "Smooth",
+    "high": "HD",
+    "autoHint": "Picked for this device (now: {tier})",
+    "lowHint": "Light and fluid for phones and older laptops",
+    "highHint": "Full detail for devices with a strong GPU",
+    "note": "The page reloads at the same chapter."
+  },
+  "nav": {
+    "label": "Chapter navigation",
+    "prev": "Previous chapter",
+    "next": "Next chapter",
+    "chapterOf": "Chapter {current} of {total}"
+  },
+  "chapters": {
+    "intro": "Arafah Green Legacy",
+    "reveal": "Meet the Smart Tree",
+    "assembly": "Modular Assembly",
+    "water": "Closed-Loop Water",
+    "dashboard": "IoT Dashboard",
+    "roadmap": "Roadmap"
+  },
+  "modules": {
+    "trunk_base": {
+      "name": "Main Trunk",
+      "desc": "The main structure, stacked in tiers like Lego with hidden male-female joints that blend into the wood texture. Easy to take apart, move and reassemble; its hollow core houses the technology modules."
+    },
+    "green_tank": {
+      "name": "Water Tank",
+      "desc": "Water tank of the closed-loop system. Water is pumped from the tank to the planting modules and roots, then returns to the tank, saving water in dry environments."
+    },
+    "distribution_pipe": {
+      "name": "Distribution Pipe",
+      "desc": "Carries water from the pump to the planting modules and roots as part of the closed water loop."
+    },
+    "nutrient_tank": {
+      "name": "Nutrient Tanks A & B",
+      "desc": "Nutrient tanks A and B. Nutrient levels are monitored through electrical conductivity (EC), targeting about {ec}."
+    },
+    "battery": {
+      "name": "Battery & Charge Controller",
+      "desc": "Stores energy for the Smart Tree’s smart systems. Battery status and solar panel power are monitored via IoT."
+    },
+    "tree_crown": {
+      "name": "Canopy",
+      "desc": "A green canopy that creates a shady, pleasant and cool space for pilgrims, visitors and tourists."
+    },
+    "solar_panel": {
+      "name": "Solar Panel",
+      "desc": "A {power} solar panel that powers the Smart Tree’s smart systems and supports energy efficiency."
+    },
+    "branch_apple": {
+      "name": "Apple Branch",
+      "desc": "Apple planting module. One Smart Tree can host several plant species, chosen through biological needs analysis and testing."
+    },
+    "branch_mango": {
+      "name": "Mango Branch",
+      "desc": "Mango planting module. One Smart Tree can host several plant species, chosen through biological needs analysis and testing."
+    },
+    "branch_grape": {
+      "name": "Grape Branch",
+      "desc": "Grape planting module. One Smart Tree can host several plant species, chosen through biological needs analysis and testing."
+    },
+    "branch_orange": {
+      "name": "Orange Branch",
+      "desc": "Orange planting module. One Smart Tree can host several plant species, chosen through biological needs analysis and testing."
+    }
+  },
+  "loading": {
+    "label": "Loading progress",
+    "core": "Preparing core modules…",
+    "background": "Loading details {percent}",
+    "error": "The 3D models failed to load. Check the connection, then reload.",
+    "partialError": "Some models failed to load",
+    "retry": "Reload"
+  },
+  "assembly": {
+    "explode": "Explode modules",
+    "assemble": "Reassemble"
+  },
+  "pillars": {
+    "plant": "Living Plant",
+    "structure": "Modular Structure",
+    "tech": "Smart Technology"
+  },
+  "units": {
+    "watt": "W",
+    "msPerCm": "mS/cm",
+    "cm": "cm",
+    "celsius": "°C",
+    "percent": "%"
+  },
+  "info": {
+    "close": "Close info panel"
+  },
+  "story": {
+    "intro": {
+      "kicker": "Arafah Green Legacy",
+      "title": "Greening Arafah",
+      "body1": "Our vision: a greener, more comfortable, shaded and refreshing environment for Hajj and Umrah pilgrims, visitors and tourists in Arafah.",
+      "body2": "Inspired by the story of the “Soekarno Trees”, the Arafah greening program by President Soekarno in 1955, now carried forward with modern technology."
+    },
+    "reveal": {
+      "kicker": "Smart Tree",
+      "title": "Living Plant + Modular Structure + Smart Technology",
+      "body1": "A smart modular tree built on IoT and hydroponics, for greening hot and dry regions.",
+      "points": {
+        "modular": {
+          "title": "Modular",
+          "text": "Stacked in tiers like Lego."
+        },
+        "living": {
+          "title": "Living",
+          "text": "Supports real, living plants."
+        },
+        "movable": {
+          "title": "Movable",
+          "text": "Easy to take apart, move and reassemble."
+        }
+      },
+      "hint": "Hover or tap a module to see its details."
+    },
+    "assembly": {
+      "kicker": "Modular Structure",
+      "title": "Assembled like Lego",
+      "body1": "Each module locks in with hidden male-female joints that blend into the wood texture, so the tree is easy to take apart, move and reassemble.",
+      "body2": "Recommended standard height: {height}.",
+      "hint": "Press “Reassemble” to watch the modules lock in one by one."
+    },
+    "water": {
+      "kicker": "Smart Water System",
+      "title": "Closed-loop water",
+      "body1": "Water circulates in a closed-loop system for water efficiency in dry environments.",
+      "steps": {
+        "tank": {
+          "title": "Tank",
+          "text": "Water is stored in the tank at the base of the trunk."
+        },
+        "pump": {
+          "title": "Pump",
+          "text": "The pump moves water up through the distribution pipe."
+        },
+        "roots": {
+          "title": "Roots",
+          "text": "Water reaches the planting modules and their roots on every branch."
+        },
+        "return": {
+          "title": "Return",
+          "text": "Water flows back down to the tank to circulate again."
+        }
+      }
+    },
+    "more": "Read more",
+    "less": "Show less",
+    "start": "Start exploring"
+  },
+  "dashboard": {
+    "title": "IoT Dashboard",
+    "clock": "Simulated time {time}",
+    "metrics": {
+      "temperature": "Temperature",
+      "humidity": "Humidity",
+      "ph": "Water pH",
+      "ec": "Nutrients (EC)",
+      "waterLevel": "Water level",
+      "battery": "Battery",
+      "solar": "Solar panel power",
+      "pump": "Pump",
+      "plant": "Plant status"
+    },
+    "max": "max. {max}",
+    "pump": {
+      "on": "ON",
+      "off": "OFF",
+      "toggle": "Turn the pump on or off"
+    },
+    "plant": {
+      "good": "Healthy",
+      "attention": "Needs attention"
+    },
+    "note": "All values are simulated for demonstration, not real sensor data."
+  },
+  "roadmap": {
+    "title": "Smart Tree Roadmap",
+    "vision": "Arafah Green Legacy",
+    "groups": {
+      "core": {
+        "title": "Core design",
+        "text": "The Smart Tree foundations shown in this 3D model."
+      },
+      "app": {
+        "title": "App features",
+        "text": "Additional features of the Smart Tree monitoring app."
+      },
+      "rnd": {
+        "title": "Research & development",
+        "text": "Still in research and not yet a working feature."
+      }
+    },
+    "items": {
+      "core": {
+        "modular": {
+          "title": "Modular structure",
+          "text": "Stacked in tiers like Lego; easy to take apart, move and reassemble."
+        },
+        "water": {
+          "title": "Closed-loop water",
+          "text": "Tank → pump → planting modules and roots → back to the tank."
+        },
+        "iot": {
+          "title": "IoT sensors & automation",
+          "text": "Sensors read parameters and trigger the system automatically, such as irrigation."
+        },
+        "solar": {
+          "title": "Solar energy",
+          "text": "{power} solar panel with battery status monitoring."
+        },
+        "plants": {
+          "title": "Planting modules",
+          "text": "One tree for several plant species, such as mango, orange, apple and grape."
+        }
+      },
+      "app": {
+        "nutrients": {
+          "title": "Nutrient monitoring & water indicator"
+        },
+        "camera": {
+          "title": "Monitoring camera"
+        },
+        "chat": {
+          "title": "IoT chat"
+        },
+        "health": {
+          "title": "Plant health status"
+        }
+      },
+      "rnd": {
+        "awg": {
+          "title": "AWG / Dew Harvester",
+          "text": "Atmospheric Water Generator to capture water from the air."
+        },
+        "recovery": {
+          "title": "Water Recovery & Transpiration",
+          "text": "Reuses water condensed from plant transpiration."
+        }
+      }
+    }
+  },
+  "tour": {
+    "play": "Auto tour",
+    "pause": "Pause tour"
+  },
+  "fallback": {
+    "title": "3D view unavailable",
+    "text": "This browser or device does not support WebGL, so the interactive 3D model cannot be shown. This image shows the Smart Tree; open the page in an up-to-date Chrome, Edge or Safari for the interactive version.",
+    "alt": "Smart Tree: a modular tree with technology modules inside the trunk, a canopy, a solar panel, and apple, mango, grape and orange branches."
+  },
+  "contextLost": {
+    "text": "Restoring the 3D view…"
+  },
+  "badges": {
+    "demo": "Demo data",
+    "rnd": "Under R&D"
+  }
+}

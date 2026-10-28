@@ -1,0 +1,1820 @@
+/* HTML overlay above the canvas. Logical properties only, so dir="rtl" mirrors the layout.
+   Visual language (Tahap 16): smoked-glass panels with a gold hairline, khatam ornaments, Reem Kufi
+   display type. Motion: CSS for state changes, src/ui/motion.js (Motion springs) for entrances. */
+
+.sprite {
+  position: absolute;
+  inline-size: 0;
+  block-size: 0;
+  overflow: hidden;
+}
+
+/* ───────────────────────── Backdrop (behind the transparent canvas) ───────────────────────── */
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  background: var(--sky-top);
+}
+
+.backdrop__sky,
+.backdrop__stars,
+.backdrop__vignette {
+  position: absolute;
+  inset: 0;
+}
+
+/* Dusk: warm glow low on the horizon fading up into indigo night. */
+.backdrop__sky {
+  background:
+    radial-gradient(120% 60% at 50% 100%, rgb(201 129 79 / 0.55) 0%, rgb(138 90 60 / 0.25) 30%, transparent 62%),
+    linear-gradient(to bottom, var(--sky-top) 0%, #1a1726 40%, var(--sky-mid) 75%, #3a2733 100%);
+}
+
+/* A few faint stars in the upper sky (pure CSS, no image). */
+.backdrop__stars {
+  background-image:
+    radial-gradient(1px 1px at 12% 18%, rgb(244 234 216 / 0.7), transparent 60%),
+    radial-gradient(1px 1px at 27% 8%, rgb(244 234 216 / 0.5), transparent 60%),
+    radial-gradient(1.5px 1.5px at 41% 22%, rgb(244 234 216 / 0.6), transparent 60%),
+    radial-gradient(1px 1px at 58% 12%, rgb(244 234 216 / 0.45), transparent 60%),
+    radial-gradient(1px 1px at 69% 28%, rgb(244 234 216 / 0.4), transparent 60%),
+    radial-gradient(1.5px 1.5px at 83% 9%, rgb(244 234 216 / 0.65), transparent 60%),
+    radial-gradient(1px 1px at 92% 24%, rgb(244 234 216 / 0.45), transparent 60%),
+    radial-gradient(1px 1px at 6% 34%, rgb(244 234 216 / 0.35), transparent 60%);
+  mask-image: linear-gradient(to bottom, #000 0%, transparent 45%);
+}
+
+/* The Arafah illustration: intro only, cross-fades out as the tree takes the stage. */
+.backdrop__hero {
+  position: absolute;
+  inset: -2%;
+  inline-size: 104%;
+  block-size: 104%;
+  object-fit: cover;
+  object-position: 50% 100%;
+  opacity: 0;
+  transform: scale(1.06);
+  transition:
+    opacity 900ms var(--ease-out),
+    transform 1400ms var(--ease-out);
+  will-change: opacity, transform;
+}
+
+.backdrop[data-chapter='intro'] .backdrop__hero {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Darkens the edges so overlay text keeps contrast on any screen shape. */
+.backdrop__vignette {
+  background: radial-gradient(130% 90% at 50% 45%, transparent 55%, rgb(10 9 16 / 0.55) 100%);
+}
+
+.backdrop[data-chapter='intro'] .backdrop__vignette {
+  background:
+    radial-gradient(70% 50% at 50% 42%, rgb(10 9 16 / 0.42) 0%, transparent 70%),
+    radial-gradient(130% 90% at 50% 45%, transparent 55%, rgb(10 9 16 / 0.6) 100%);
+}
+
+/* ───────────────────────── Overlay grid & panels ───────────────────────── */
+
+#ui {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  padding: 20px;
+  gap: var(--gap);
+}
+
+/* Only panels and controls catch the pointer; everything else lets drags through to the 3D canvas. */
+.panel {
+  position: relative;
+  pointer-events: auto;
+  background: var(--surface);
+  backdrop-filter: var(--blur);
+  -webkit-backdrop-filter: var(--blur);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+/* Large panels (dashboard, roadmap, info) sit over a 3D view that may animate every frame: a
+   backdrop blur there costs a full re-blur per frame on weak GPUs (Tahap 16 measurement), so they
+   use a near-opaque surface instead. Small chrome (nav, language, story card) keeps the glass. */
+.dashboard,
+.roadmap,
+.info-panel {
+  background: var(--surface-solid);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+/* Pointer-following gold glow on the panel border (src/ui/glow.js sets --mx / --my). */
+.panel::after {
+  content: '';
+  position: absolute;
+  inset: 0; /* inside the border box: never adds scroll overflow */
+  padding: 1px;
+  border-radius: inherit;
+  background: radial-gradient(220px circle at var(--mx, 50%) var(--my, -200px), rgb(233 196 120 / 0.9), transparent 70%);
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  -webkit-mask-composite: xor;
+  opacity: 0;
+  transition: opacity var(--dur) ease;
+  pointer-events: none;
+}
+
+.panel[data-glow]::after {
+  opacity: 1;
+}
+
+body[data-quality='low'] .panel::after {
+  display: none;
+}
+
+/* ───────────────────────── Buttons ───────────────────────── */
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-block-size: 44px;
+  padding-inline: 22px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    transform var(--dur-fast) var(--ease-out),
+    background-color var(--dur) ease,
+    border-color var(--dur) ease,
+    box-shadow var(--dur) ease;
+}
+
+.button:active {
+  transform: scale(0.97);
+}
+
+.button--primary {
+  background: linear-gradient(180deg, #a6d685 0%, var(--leaf) 55%, #79ad57 100%);
+  color: var(--accent-ink);
+  box-shadow: 0 1px 0 rgb(255 255 255 / 0.35) inset, 0 10px 24px -10px rgb(143 196 106 / 0.8);
+}
+
+.button--primary:hover {
+  box-shadow: 0 1px 0 rgb(255 255 255 / 0.35) inset, 0 14px 30px -10px rgb(143 196 106 / 0.95);
+}
+
+.button--glass {
+  pointer-events: auto;
+  background: var(--surface-strong);
+  backdrop-filter: var(--blur);
+  -webkit-backdrop-filter: var(--blur);
+  border-color: var(--hairline);
+  color: var(--text);
+  box-shadow: var(--shadow);
+}
+
+.button--glass:hover {
+  border-color: var(--hairline-strong);
+}
+
+.icon-button {
+  display: grid;
+  place-items: center;
+  inline-size: 44px;
+  block-size: 44px;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: var(--surface-raised);
+  cursor: pointer;
+  transition:
+    transform var(--dur-fast) var(--ease-out),
+    border-color var(--dur) ease,
+    background-color var(--dur) ease;
+}
+
+.icon-button:hover:not(:disabled) {
+  border-color: var(--hairline-strong);
+  background: var(--gold-soft);
+}
+
+.icon-button:active:not(:disabled) {
+  transform: scale(0.92);
+}
+
+.icon-button:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.button:focus-visible,
+.icon-button:focus-visible,
+.lang-switch button:focus-visible,
+.tour-toggle:focus-visible,
+.chapter-nav__dot:focus-visible,
+.story-card__more:focus-visible,
+.metric__switch:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+/* Arrow icons point "forward" in reading direction and are mirrored for RTL. */
+.icon-arrow {
+  inline-size: 20px;
+  block-size: 20px;
+  flex: none;
+}
+
+.icon-arrow--back,
+[dir='rtl'] .icon-arrow {
+  transform: scaleX(-1);
+}
+
+[dir='rtl'] .icon-arrow--back {
+  transform: none;
+}
+
+/* ───────────────────────── Top bar ───────────────────────── */
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gap);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-align: start;
+  text-shadow: 0 1px 12px rgb(0 0 0 / 0.5);
+}
+
+.brand__mark {
+  inline-size: 40px;
+  block-size: 40px;
+  flex: none;
+  filter: drop-shadow(0 4px 12px rgb(201 164 92 / 0.35));
+}
+
+.brand__star {
+  fill: rgb(201 164 92 / 0.14);
+  stroke: var(--gold);
+  stroke-width: 1.6;
+  stroke-linejoin: round;
+}
+
+.brand__leaf {
+  fill: var(--leaf);
+  stroke: var(--accent-ink);
+  stroke-width: 1.4;
+  stroke-linecap: round;
+}
+
+.brand__text {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand__name {
+  font-family: var(--font-display);
+  font-size: 1.375rem;
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: 0.01em;
+}
+
+.brand__tagline {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+  letter-spacing: 0.02em;
+}
+
+.topbar__end {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Graphics quality menu (src/ui/qualitySwitch.js): a pill button with a popover of three choices. */
+.quality-menu {
+  position: relative;
+}
+
+.quality-menu__button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-block-size: 46px;
+  padding-inline: 14px 16px;
+  border-radius: var(--radius-pill);
+  color: var(--text-muted);
+  font-weight: 700;
+  cursor: pointer;
+  transition: color var(--dur) ease, border-color var(--dur) ease;
+}
+
+.quality-menu__button:hover,
+.quality-menu__button[aria-expanded='true'] {
+  color: var(--text);
+  border-color: var(--hairline-strong);
+}
+
+.quality-menu__button:focus-visible,
+.quality-menu__item:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+.quality-menu__icon {
+  inline-size: 18px;
+  block-size: 18px;
+  color: var(--gold);
+  flex: none;
+}
+
+.quality-menu__list {
+  position: absolute;
+  z-index: 5;
+  inset-block-start: calc(100% + 8px);
+  inset-inline-end: 0;
+  inline-size: 280px;
+  padding: 10px;
+  background: var(--surface-opaque); /* the menu often sits over the chapter card */
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.quality-menu__title {
+  padding: 4px 8px 8px;
+  font-family: var(--font-display);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  color: var(--gold);
+  letter-spacing: var(--tracking-kicker);
+  text-transform: uppercase;
+}
+
+html[lang='ar'] .quality-menu__title {
+  letter-spacing: 0;
+}
+
+.quality-menu__items {
+  display: grid;
+  gap: 4px;
+}
+
+.quality-menu__item {
+  display: grid;
+  gap: 1px;
+  padding: 9px 12px;
+  padding-inline-start: 36px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  text-align: start;
+  cursor: pointer;
+  position: relative;
+  transition: background-color var(--dur-fast) ease, border-color var(--dur-fast) ease;
+}
+
+.quality-menu__item:hover {
+  background: var(--surface-raised);
+  border-color: var(--border);
+}
+
+/* Radio mark at inline-start; filled with a small khatam when chosen. */
+.quality-menu__item::before {
+  content: '';
+  position: absolute;
+  inset-inline-start: 12px;
+  inset-block-start: 13px;
+  inline-size: 14px;
+  block-size: 14px;
+  border: 1.5px solid var(--text-faint);
+  border-radius: 50%;
+}
+
+.quality-menu__item[aria-checked='true'] {
+  background: var(--leaf-soft);
+  border-color: rgb(143 196 106 / 0.35);
+}
+
+.quality-menu__item[aria-checked='true']::before {
+  border-color: var(--leaf);
+  background: radial-gradient(circle, var(--leaf) 0 40%, transparent 45%);
+}
+
+.quality-menu__name {
+  font-weight: 700;
+}
+
+.quality-menu__hint {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+.quality-menu__note {
+  margin: 8px 8px 2px;
+  font-size: 0.6875rem;
+  color: var(--text-faint);
+}
+
+/* Language switcher: segmented control with a sliding gold pill (src/ui/langSwitcher.js). */
+.lang-switch {
+  display: flex;
+  gap: 2px;
+  padding: 4px;
+  border-radius: var(--radius-pill);
+}
+
+.lang-switch__pill {
+  position: absolute;
+  inset-block: 4px;
+  inset-inline-start: 0;
+  inline-size: 0;
+  border-radius: var(--radius-pill);
+  background: linear-gradient(180deg, #dcbb78, var(--gold));
+  box-shadow: 0 4px 14px -4px rgb(201 164 92 / 0.7);
+  pointer-events: none;
+}
+
+.lang-switch button {
+  position: relative; /* above the pill */
+  min-inline-size: 46px;
+  min-block-size: 36px;
+  padding-inline: 12px;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-weight: 700;
+  transition: color var(--dur) ease;
+}
+
+.lang-switch button:hover {
+  color: var(--text);
+}
+
+.lang-switch button[aria-pressed='true'] {
+  color: #1b1408;
+}
+
+/* ───────────────────────── Chapter navigation ───────────────────────── */
+
+.chapter-nav {
+  justify-self: center;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px;
+  border-radius: var(--radius-pill);
+  max-inline-size: 100%;
+  touch-action: pan-y;
+}
+
+.chapter-nav__label {
+  display: grid;
+  gap: 6px;
+  min-inline-size: 15rem;
+  padding-inline: 6px;
+}
+
+.chapter-nav__meta {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 10px;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.chapter-nav__count {
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  color: var(--gold);
+  font-variant-numeric: tabular-nums;
+}
+
+.chapter-nav__title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Progress rail: one segment per chapter; the current one stretches (flex-grow transition). */
+.chapter-nav__rail {
+  display: flex;
+  gap: 5px;
+}
+
+.chapter-nav__dot {
+  flex: 1 1 0;
+  block-size: 6px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: rgb(244 234 216 / 0.14);
+  cursor: pointer;
+  transition:
+    flex-grow 520ms cubic-bezier(0.34, 1.4, 0.64, 1),
+    background-color var(--dur) ease;
+}
+
+/* Bigger hit area without changing the drawn bar. */
+.chapter-nav__dot {
+  background-clip: content-box;
+  padding-block: 6px;
+  margin-block: -6px;
+  block-size: 18px;
+}
+
+.chapter-nav__dot[data-state='done'] {
+  background-color: rgb(201 164 92 / 0.55);
+}
+
+.chapter-nav__dot[data-state='current'] {
+  flex-grow: 3.2;
+  background-color: var(--leaf);
+}
+
+.chapter-nav__dot:hover:not([data-state='current']) {
+  background-color: rgb(244 234 216 / 0.32);
+}
+
+/* Auto tour toggle at the inline-end of the chapter nav. The play icon is not mirrored in RTL
+   (media controls keep their direction in RTL interfaces). */
+.tour-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-block-size: 44px;
+  padding-inline: 14px 18px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--surface-raised);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    background-color var(--dur) ease,
+    border-color var(--dur) ease,
+    color var(--dur) ease,
+    transform var(--dur-fast) var(--ease-out);
+}
+
+.tour-toggle:hover {
+  border-color: var(--hairline-strong);
+}
+
+.tour-toggle:active {
+  transform: scale(0.96);
+}
+
+.tour-toggle svg {
+  inline-size: 16px;
+  block-size: 16px;
+}
+
+.tour-toggle[aria-pressed='true'] {
+  background: var(--leaf);
+  border-color: transparent;
+  color: var(--accent-ink);
+}
+
+.tour-toggle[aria-pressed='true'] .tour-toggle__play,
+.tour-toggle[aria-pressed='false'] .tour-toggle__pause {
+  display: none;
+}
+
+/* ───────────────────────── Loading screen ───────────────────────── */
+
+/* Between the canvas and #ui, so the top bar (language switch) stays usable. */
+.loading {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: var(--gap);
+  background: url('/art/girih.svg') center / 96px repeat, var(--sky-top);
+  transition: opacity 0.7s var(--ease-out);
+}
+
+/* Fades the lattice toward the edges. */
+.loading::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(closest-side, rgb(18 19 31 / 0.8), var(--sky-top));
+}
+
+.loading.is-done {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.loading__card {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  inline-size: min(340px, 100%);
+  text-align: center;
+}
+
+/* Khatam drawn stroke by stroke as phase 0 loads (--p = 0..100 from src/ui/loadingScreen.js). */
+.loading__star {
+  inline-size: 88px;
+  block-size: 88px;
+  margin-block-end: 6px;
+  overflow: visible;
+}
+
+.loading__star path {
+  fill: none;
+  stroke-width: 1.4;
+  stroke-linejoin: round;
+}
+
+.loading__star-track {
+  stroke: rgb(201 164 92 / 0.2);
+}
+
+.loading__star-fill {
+  stroke: var(--gold);
+  stroke-dasharray: 100;
+  stroke-dashoffset: calc(100 - var(--p, 0));
+  filter: drop-shadow(0 0 6px rgb(201 164 92 / 0.6));
+  transition: stroke-dashoffset 0.35s linear;
+}
+
+/* Before the first progress event the star outline chases itself. */
+.loading:not(.has-progress) .loading__star-fill {
+  stroke-dasharray: 18 82;
+  animation: star-chase 1.6s linear infinite;
+}
+
+@keyframes star-chase {
+  to { stroke-dashoffset: -100; }
+}
+
+.loading__brand {
+  font-family: var(--font-display);
+  font-size: var(--fs-xl);
+  font-weight: 600;
+}
+
+.loading__status {
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+}
+
+.loading__bar {
+  inline-size: 160px;
+  block-size: 2px;
+  margin-block-start: 4px;
+  border-radius: var(--radius-pill);
+  background: rgb(201 164 92 / 0.18);
+  overflow: hidden;
+}
+
+/* Grows from inline-start, so it fills right-to-left in Arabic. */
+.loading__fill {
+  inline-size: 0;
+  block-size: 100%;
+  background: var(--gold);
+  transition: inline-size 0.2s linear;
+}
+
+.loading:not(.has-progress) .loading__fill {
+  inline-size: 30%;
+  animation: loading-sweep 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes loading-sweep {
+  from { margin-inline-start: 0; }
+  to { margin-inline-start: 70%; }
+}
+
+.loading__percent {
+  font-size: var(--fs-xs);
+  font-variant-numeric: tabular-nums;
+  color: var(--text-faint);
+  letter-spacing: 0.08em;
+}
+
+.loading__retry {
+  margin-block-start: var(--gap-sm);
+}
+
+body.is-loading .chapter-nav,
+body.is-loading .story-card {
+  visibility: hidden;
+}
+
+/* ───────────────────────── Story card ───────────────────────── */
+
+/* inline-start, vertically centered (inset + auto margins: no transform, so Motion can animate it). */
+.story-card {
+  position: fixed;
+  inset-inline-start: 20px;
+  inset-block: 0;
+  margin-block: auto;
+  block-size: fit-content;
+  inline-size: min(400px, calc(100% - 40px));
+  max-block-size: calc(100% - 230px);
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding: 30px 26px 24px;
+  touch-action: pan-y; /* horizontal swipes go to chapter navigation */
+  scrollbar-width: thin;
+  scrollbar-color: var(--hairline) transparent;
+}
+
+.story-card[hidden] {
+  display: none;
+}
+
+/* Mihrab-like arch traced along the top edge. */
+.story-card__arch {
+  position: absolute;
+  inset-block-start: 8px;
+  inset-inline: 18px;
+  inline-size: calc(100% - 36px);
+  block-size: 14px;
+  overflow: visible;
+}
+
+.story-card__arch path {
+  fill: none;
+  stroke: var(--hairline);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.story-card__kicker {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-display);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  color: var(--gold);
+  letter-spacing: var(--tracking-kicker);
+  text-transform: uppercase;
+}
+
+.story-card__kicker::after {
+  content: '';
+  flex: 1;
+  block-size: 1px;
+  background: linear-gradient(to right, var(--hairline), transparent);
+}
+
+[dir='rtl'] .story-card__kicker::after {
+  background: linear-gradient(to left, var(--hairline), transparent);
+}
+
+.story-card__title {
+  margin-block: 10px 12px;
+  font-family: var(--font-display);
+  font-size: var(--fs-xl);
+  font-weight: 600;
+  line-height: 1.2;
+  text-wrap: balance;
+}
+
+.story-card__body p {
+  margin-block: 0 10px;
+  color: var(--text-muted);
+  line-height: 1.65;
+}
+
+.story-card__body bdi {
+  color: var(--text);
+  font-weight: 700;
+}
+
+.story-card__points {
+  display: grid;
+  gap: 2px;
+  margin: 4px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.story-card__points li {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 10px;
+  padding-block: 7px;
+  border-block-end: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+  line-height: 1.5;
+}
+
+/* Small khatam bullet. */
+.story-card__points li::before {
+  content: '';
+  grid-row: span 2;
+  inline-size: 10px;
+  block-size: 10px;
+  margin-block-start: 5px;
+  background: var(--leaf);
+  clip-path: polygon(50% 0, 64.6% 14.6%, 85.4% 14.6%, 85.4% 35.4%, 100% 50%, 85.4% 64.6%, 85.4% 85.4%, 64.6% 85.4%, 50% 100%, 35.4% 85.4%, 14.6% 85.4%, 14.6% 64.6%, 0 50%, 14.6% 35.4%, 14.6% 14.6%, 35.4% 14.6%);
+}
+
+.story-card__points li:last-child {
+  border-block-end: 0;
+}
+
+.story-card__points strong {
+  color: var(--text);
+  font-family: var(--font-display);
+  font-weight: 600;
+}
+
+.story-card__hint {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-block: 16px 0;
+  padding-block-start: 12px;
+  border-block-start: 1px dashed var(--border);
+  font-size: var(--fs-sm);
+  color: var(--text-faint);
+}
+
+.story-card__hint::before {
+  content: '';
+  inline-size: 6px;
+  block-size: 6px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 0 4px var(--gold-soft);
+}
+
+.story-card__more {
+  margin-block-start: var(--gap-sm);
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--gold);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.story-card__more[hidden],
+.story-card__cta[hidden] {
+  display: none;
+}
+
+/* Intro: the card becomes a centered hero over the Arafah illustration. */
+.story-card[data-chapter='intro'] {
+  inset-inline: 0;
+  margin-inline: auto;
+  inset-block: 0 12vh;
+  inline-size: min(760px, calc(100% - 40px));
+  max-block-size: none;
+  overflow: visible;
+  padding: 0;
+  text-align: center;
+  text-shadow: 0 2px 18px rgb(10 9 16 / 0.65);
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  pointer-events: none;
+}
+
+.story-card[data-chapter='intro']::after,
+.story-card[data-chapter='intro'] .story-card__arch {
+  display: none;
+}
+
+.story-card[data-chapter='intro'] .story-card__kicker {
+  justify-content: center;
+  font-size: var(--fs-sm);
+}
+
+.story-card[data-chapter='intro'] .story-card__kicker::before,
+.story-card[data-chapter='intro'] .story-card__kicker::after {
+  content: '';
+  flex: 0 0 48px;
+  block-size: 1px;
+  background: var(--hairline-strong);
+}
+
+.story-card[data-chapter='intro'] .story-card__title {
+  margin-block: 14px 18px;
+  font-size: var(--fs-hero);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  background: linear-gradient(180deg, #fff8ea 30%, #e3c58c 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: none;
+  filter: drop-shadow(0 4px 24px rgb(10 9 16 / 0.6));
+}
+
+.story-card[data-chapter='intro'] .story-card__body {
+  max-inline-size: 36rem;
+  margin-inline: auto;
+}
+
+.story-card[data-chapter='intro'] .story-card__body p {
+  font-size: 1.0625rem;
+  color: #e6dac4;
+}
+
+.story-card[data-chapter='intro'] .story-card__cta {
+  pointer-events: auto;
+  margin-block-start: 18px;
+  min-block-size: 52px;
+  padding-inline: 28px 24px;
+  font-size: var(--fs-md);
+  text-shadow: none;
+}
+
+/* Arabic: no letter spacing (it breaks the joined script) and a roomier line height. */
+html[lang='ar'] .story-card__kicker,
+html[lang='ar'] .brand__name,
+html[lang='ar'] .story-card[data-chapter='intro'] .story-card__title,
+html[lang='ar'] .loading__percent {
+  letter-spacing: 0;
+}
+
+html[lang='ar'] .story-card__title,
+html[lang='ar'] .story-card[data-chapter='intro'] .story-card__title {
+  line-height: 1.45;
+}
+
+html[lang='ar'] .story-card__body p {
+  line-height: 1.85;
+}
+
+/* ───────────────────────── Stage (assembly toggle, background loading pill) ───────────────────────── */
+
+.stage {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  gap: var(--gap-sm);
+}
+
+.assembly-toggle[aria-pressed='true'] {
+  background: var(--leaf);
+  border-color: transparent;
+  color: var(--accent-ink);
+}
+
+.assembly-toggle[hidden] {
+  display: none;
+}
+
+.load-status {
+  padding-block: 4px;
+  padding-inline: 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.load-status[hidden] {
+  display: none;
+}
+
+/* ───────────────────────── Badges (mandatory, never hidden) ───────────────────────── */
+
+/* "Data demo" / "Tahap R&D": loud amber with a dashed-ring icon, so it never reads as "live". */
+.demo-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding-block: 3px;
+  padding-inline: 8px 10px;
+  border-radius: var(--radius-pill);
+  background: var(--demo);
+  color: var(--demo-ink);
+  font-size: var(--fs-xs);
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.demo-badge::before {
+  content: '';
+  inline-size: 8px;
+  block-size: 8px;
+  flex: none;
+  border: 1.5px dashed currentColor;
+  border-radius: 50%;
+}
+
+.demo-badge--compact {
+  padding-block: 1px;
+  padding-inline: 5px 7px;
+  font-size: 0.6875rem;
+  gap: 4px;
+}
+
+.demo-badge--compact::before {
+  inline-size: 6px;
+  block-size: 6px;
+  border-width: 1px;
+}
+
+/* ───────────────────────── Dashboard (chapter e) ───────────────────────── */
+
+.dashboard {
+  position: fixed;
+  inset-inline-start: 20px;
+  inset-block-start: 96px;
+  inline-size: min(560px, calc(100% - 40px));
+  max-block-size: calc(100% - 210px);
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding: 18px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--hairline) transparent;
+}
+
+.dashboard[hidden] {
+  display: none;
+}
+
+.dashboard__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--gap-sm);
+  margin-block-end: 14px;
+}
+
+.dashboard__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.dashboard__clock {
+  margin-block-start: 2px;
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.dashboard__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.dashboard__note {
+  margin-block: 14px 0;
+  font-size: var(--fs-xs);
+  color: var(--text-faint);
+}
+
+.metric {
+  position: relative;
+  display: grid;
+  align-content: start;
+  gap: 4px;
+  min-inline-size: 0;
+  padding: 11px 12px 10px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: linear-gradient(180deg, rgb(244 234 216 / 0.05), rgb(244 234 216 / 0.015));
+  transition: border-color var(--dur) ease;
+}
+
+.metric:hover {
+  border-color: var(--hairline);
+}
+
+.metric__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+}
+
+.metric__label {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+  line-height: 1.3;
+}
+
+.metric__value {
+  font-size: 1.375rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.2;
+  text-align: start;
+  letter-spacing: -0.01em;
+}
+
+.metric__spark {
+  inline-size: 100%;
+  block-size: 28px;
+  overflow: visible;
+}
+
+.metric__spark polyline {
+  fill: none;
+  stroke: var(--leaf);
+  stroke-width: 1.5;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.metric__spark polygon {
+  stroke: none;
+}
+
+/* Low tier: line only (the gradient area enlarges the 2 Hz repaint of every card). */
+body[data-quality='low'] .metric__spark polygon {
+  display: none;
+}
+
+.metric__spark-top {
+  stop-color: var(--leaf);
+  stop-opacity: 0.32;
+}
+
+.metric__spark-bottom {
+  stop-color: var(--leaf);
+  stop-opacity: 0;
+}
+
+.metric__note {
+  font-size: 0.6875rem;
+  color: var(--text-faint);
+}
+
+.metric--status[data-status='good'] .metric__value {
+  color: var(--leaf);
+}
+
+.metric--status[data-status='attention'] .metric__value {
+  color: var(--demo);
+}
+
+/* Pump switch (role="switch"); the knob moves to inline-end when on, so it mirrors in RTL. */
+.metric__switch {
+  position: relative;
+  inline-size: 54px;
+  block-size: 30px;
+  margin-block-start: 4px;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: rgb(244 234 216 / 0.1);
+  cursor: pointer;
+  transition: background-color var(--dur) ease;
+}
+
+.metric__switch::after {
+  content: '';
+  position: absolute;
+  inset-block-start: 3px;
+  inset-inline-start: 3px;
+  inline-size: 22px;
+  block-size: 22px;
+  border-radius: 50%;
+  background: var(--text);
+  box-shadow: 0 2px 6px rgb(0 0 0 / 0.35);
+  transition: inset-inline-start 380ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.metric__switch[aria-checked='true'] {
+  background: var(--leaf);
+}
+
+.metric__switch[aria-checked='true']::after {
+  inset-inline-start: 27px;
+  background: #fbf6ec;
+}
+
+.metric--switch[data-on='false'] .metric__value {
+  color: var(--text-muted);
+}
+
+/* ───────────────────────── Roadmap (chapter f) ───────────────────────── */
+
+/* R&D items: dashed amber frame + badge, never a "done" look. */
+.roadmap {
+  position: fixed;
+  inset-inline-start: 20px;
+  inset-block-start: 96px;
+  inline-size: min(680px, calc(100% - 40px));
+  max-block-size: calc(100% - 210px);
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding: 20px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--hairline) transparent;
+}
+
+/* Two columns: core design | app features above R&D, so R&D is visible without scrolling. */
+.roadmap__groups {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-areas: 'core app' 'core rnd';
+  align-items: start;
+  gap: 16px 22px;
+}
+
+.roadmap__group--core {
+  grid-area: core;
+}
+
+.roadmap__group--app {
+  grid-area: app;
+}
+
+.roadmap__group--rnd {
+  grid-area: rnd;
+}
+
+.roadmap[hidden] {
+  display: none;
+}
+
+.roadmap__title {
+  margin: 0 0 14px;
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  font-weight: 600;
+}
+
+/* Group heading with a small khatam node; items hang from a hairline "timeline". */
+.roadmap__group-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--fs-md);
+  font-weight: 600;
+  color: var(--leaf);
+}
+
+.roadmap__group-title::before {
+  content: '';
+  inline-size: 12px;
+  block-size: 12px;
+  flex: none;
+  background: currentColor;
+  clip-path: polygon(50% 0, 64.6% 14.6%, 85.4% 14.6%, 85.4% 35.4%, 100% 50%, 85.4% 64.6%, 85.4% 85.4%, 64.6% 85.4%, 50% 100%, 35.4% 85.4%, 14.6% 85.4%, 14.6% 64.6%, 0 50%, 14.6% 35.4%, 14.6% 14.6%, 35.4% 14.6%);
+}
+
+.roadmap__group--app .roadmap__group-title {
+  color: var(--gold);
+}
+
+.roadmap__group--rnd .roadmap__group-title {
+  color: var(--demo);
+}
+
+.roadmap__group-text {
+  margin: 2px 0 8px;
+  padding-inline-start: 20px;
+  font-size: var(--fs-xs);
+  color: var(--text-faint);
+}
+
+.roadmap__items {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  margin-inline-start: 5px;
+  padding: 0;
+  padding-inline-start: 14px;
+  border-inline-start: 1px solid var(--border);
+  list-style: none;
+}
+
+.roadmap__item {
+  position: relative;
+  padding-block: 8px;
+  padding-inline: 11px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface-raised);
+  transition:
+    border-color var(--dur) ease,
+    background-color var(--dur) ease;
+}
+
+/* Timeline tick from the rail to the item. */
+.roadmap__item::before {
+  content: '';
+  position: absolute;
+  inset-inline-start: -15px;
+  inset-block-start: 50%;
+  inline-size: 10px;
+  block-size: 1px;
+  background: var(--border);
+}
+
+.roadmap__item[tabindex] {
+  cursor: default;
+}
+
+.roadmap__item[tabindex]:hover,
+.roadmap__item[tabindex]:focus-visible {
+  border-color: var(--hairline-strong);
+  background: var(--gold-soft);
+  outline: none;
+}
+
+.roadmap__item[data-status='rnd'] {
+  border-style: dashed;
+  border-color: var(--demo);
+  background: var(--demo-soft);
+}
+
+.roadmap__item-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.roadmap__item-title {
+  font-size: var(--fs-sm);
+  line-height: 1.3;
+}
+
+.roadmap__item-text {
+  margin: 3px 0 0;
+  font-size: var(--fs-xs);
+  line-height: 1.45;
+  color: var(--text-muted);
+}
+
+.roadmap__item-text bdi {
+  color: var(--text);
+  font-weight: 700;
+}
+
+.roadmap__closing {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-block-start: 16px;
+  padding-block-start: 14px;
+  border-block-start: 1px solid var(--hairline);
+}
+
+.roadmap__seal {
+  inline-size: 34px;
+  block-size: 34px;
+  flex: none;
+  fill: var(--gold-soft);
+  stroke: var(--gold);
+  stroke-width: 1.6;
+}
+
+.roadmap__vision {
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--gold);
+}
+
+.roadmap__tagline {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+}
+
+/* ───────────────────────── Fallback (no WebGL) & context notice ───────────────────────── */
+
+.fallback {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: end center;
+  padding: var(--gap);
+  padding-block-end: 48px;
+  background: var(--sky-top);
+}
+
+.fallback[hidden] {
+  display: none;
+}
+
+.fallback__poster {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+}
+
+.fallback__card {
+  max-inline-size: 560px;
+  padding: 20px 22px;
+  background: var(--surface-strong);
+  text-align: center;
+}
+
+.fallback__title {
+  margin: 0 0 6px;
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  font-weight: 600;
+}
+
+.fallback__text {
+  margin: 0;
+  color: var(--text-muted);
+}
+
+body.no-webgl .chapter-nav,
+body.no-webgl .story-card,
+body.no-webgl .stage,
+body.no-webgl .dashboard,
+body.no-webgl .roadmap,
+body.no-webgl .info-panel,
+body.no-webgl .quality-menu {
+  display: none;
+}
+
+/* WebGL context lost: a centered notice above everything else. */
+.context-notice {
+  position: fixed;
+  z-index: 10;
+  inset: 0;
+  margin: auto;
+  inline-size: fit-content;
+  block-size: fit-content;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-block: 10px;
+  padding-inline: 20px 10px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-pill);
+  background: var(--surface-strong);
+  backdrop-filter: var(--blur);
+  -webkit-backdrop-filter: var(--blur);
+  box-shadow: var(--shadow);
+  font-weight: 700;
+}
+
+.context-notice[hidden] {
+  display: none;
+}
+
+.context-notice__reload {
+  min-block-size: 36px;
+  padding-inline: 16px;
+}
+
+.context-notice__reload[hidden] {
+  display: none;
+}
+
+/* ───────────────────────── 3D hover label ───────────────────────── */
+
+/* CSS2D label layer above the canvas; never catches the pointer. */
+.label-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  /* CSS2DRenderer places labels with physical transforms from the top-left corner; in RTL an
+     absolutely positioned child would start at the right edge. The text keeps its own direction. */
+  direction: ltr;
+}
+
+.module-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-block: 5px;
+  padding-inline: 10px 14px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-pill);
+  background: var(--surface-strong);
+  box-shadow: 0 8px 20px -8px rgb(0 0 0 / 0.6);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  white-space: nowrap;
+  unicode-bidi: plaintext; /* direction from the text itself (Arabic → RTL) */
+}
+
+.module-label::before {
+  content: '';
+  inline-size: 7px;
+  block-size: 7px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 0 3px var(--gold-soft);
+}
+
+/* ───────────────────────── Info panel ───────────────────────── */
+
+/* inline-end side panel; bottom sheet on phones (see media query below). */
+.info-panel {
+  position: fixed;
+  inset-block-start: 100px;
+  inset-inline-end: 20px;
+  inline-size: min(360px, calc(100% - 40px));
+  max-block-size: calc(100% - 210px);
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding: 20px;
+  padding-inline-end: 60px; /* room for the close button */
+}
+
+.info-panel[hidden] {
+  display: none;
+}
+
+.info-panel__close {
+  position: absolute;
+  inset-block-start: 12px;
+  inset-inline-end: 12px;
+  inline-size: 38px;
+  block-size: 38px;
+}
+
+.info-panel__close svg {
+  inline-size: 16px;
+  block-size: 16px;
+}
+
+.info-panel__pillar {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding-block: 3px;
+  padding-inline: 8px 10px;
+  border: 1px solid currentColor;
+  border-radius: var(--radius-pill);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+}
+
+.info-panel__pillar::before {
+  content: '';
+  inline-size: 6px;
+  block-size: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.info-panel__pillar[data-pillar='plant'] {
+  background: var(--leaf-soft);
+  color: var(--leaf);
+}
+
+.info-panel__pillar[data-pillar='tech'] {
+  background: rgb(159 182 217 / 0.14);
+  color: var(--sky-blue);
+}
+
+.info-panel__pillar[data-pillar='structure'] {
+  background: var(--gold-soft);
+  color: var(--gold);
+}
+
+.info-panel__title {
+  margin-block: 12px 6px;
+  font-family: var(--font-display);
+  font-size: 1.375rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.info-panel__body {
+  margin: 0;
+  color: var(--text-muted);
+  line-height: 1.65;
+}
+
+.info-panel__body bdi {
+  color: var(--text);
+  font-weight: 700;
+}
+
+/* ───────────────────────── Reduced motion ───────────────────────── */
+
+/* State changes become instant. Not "transition-duration: 0.01ms": transition-property defaults to
+   "all", so that would make every property of every element transition and layout reads (the
+   view:inset reports) would see the previous chapter's geometry. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* ───────────────────────── Phones ───────────────────────── */
+
+@media (max-width: 600px) {
+  #ui {
+    padding: 12px;
+  }
+
+  .brand__mark {
+    inline-size: 34px;
+    block-size: 34px;
+  }
+
+  .brand__name {
+    font-size: 1.125rem;
+  }
+
+  .brand__tagline {
+    display: none;
+  }
+
+  .lang-switch button {
+    min-inline-size: 40px;
+    padding-inline: 8px;
+  }
+
+  .topbar__end {
+    gap: 6px;
+  }
+
+  /* Phones: icon-only quality button; the menu spans the screen width under the top bar. */
+  .quality-menu__current {
+    display: none;
+  }
+
+  .quality-menu__button {
+    inline-size: 44px;
+    padding: 0;
+    justify-content: center;
+  }
+
+  .quality-menu {
+    position: static;
+  }
+
+  .quality-menu__list {
+    inset-inline: 12px;
+    inset-block-start: 66px;
+    inline-size: auto;
+  }
+
+  .chapter-nav {
+    gap: 6px;
+    padding: 5px;
+  }
+
+  .chapter-nav__label {
+    min-inline-size: 0;
+    flex: 1;
+  }
+
+  .chapter-nav__count {
+    display: none;
+  }
+
+  .chapter-nav__title {
+    font-size: var(--fs-sm);
+  }
+
+  /* Phones: icon-only tour button (the label stays as aria-label). */
+  .tour-toggle__label {
+    display: none;
+  }
+
+  .tour-toggle {
+    inline-size: 44px;
+    padding: 0;
+    justify-content: center;
+  }
+
+  .dashboard {
+    inset-block-start: 70px;
+    inset-inline: 12px;
+    inline-size: auto;
+    max-block-size: 48vh;
+    padding: 12px;
+  }
+
+  .dashboard__grid {
+    gap: 6px;
+  }
+
+  .roadmap__groups {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: 'core' 'app' 'rnd';
+  }
+
+  .roadmap {
+    inset-block-start: 70px;
+    inset-inline: 12px;
+    inline-size: auto;
+    max-block-size: 52vh;
+    padding: 14px;
+  }
+
+  .metric {
+    padding: 8px;
+  }
+
+  .metric__value {
+    font-size: var(--fs-md);
+  }
+
+  .metric__spark,
+  .metric__note,
+  .dashboard__note {
+    display: none;
+  }
+
+  /* Phones: the card sits under the top bar so the tree stays visible below it. */
+  .story-card {
+    inset-block: 70px auto;
+    margin-block: 0;
+    inset-inline: 12px;
+    inline-size: auto;
+    max-block-size: 38vh;
+    padding: 22px 16px 14px;
+  }
+
+  .story-card__title {
+    margin-block: 6px 8px;
+    font-size: var(--fs-lg);
+  }
+
+  /* Collapsed on phones: kicker, title and the first paragraph only. */
+  .story-card:not([data-expanded]) .story-card__body p:not(:first-child),
+  .story-card:not([data-expanded]) .story-card__points,
+  .story-card:not([data-expanded]) .story-card__hint {
+    display: none;
+  }
+
+  .story-card__body p:last-child {
+    margin-block-end: 0;
+  }
+
+  .story-card[data-chapter='intro'] {
+    inset-block: 0 14vh;
+    margin-block: auto;
+    inset-inline: 0;
+    margin-inline: auto;
+    inline-size: calc(100% - 32px);
+    max-block-size: none;
+  }
+
+  .story-card[data-chapter='intro'] .story-card__title {
+    font-size: 2.5rem;
+  }
+
+  .story-card[data-chapter='intro'] .story-card__body p {
+    font-size: var(--fs-md);
+  }
+
+  /* One explanation at a time: while a module's sheet is open, the chapter card and the other
+     panels fold away (they come back on close); src/ui/infoPanel.js sets the attribute. */
+  body[data-module-open] .story-card,
+  body[data-module-open] .dashboard,
+  body[data-module-open] .roadmap,
+  body[data-module-open] .assembly-toggle {
+    display: none;
+  }
+
+  .info-panel {
+    inset-block-start: auto;
+    inset-block-end: 92px; /* above the chapter nav */
+    inset-inline: 12px;
+    inline-size: auto;
+    max-block-size: 45vh;
+  }
+}

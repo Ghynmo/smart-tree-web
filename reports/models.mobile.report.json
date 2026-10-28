@@ -1,0 +1,1182 @@
+{
+  "generatedAt": "2026-10-28T02:59:46.967Z",
+  "source": "public/models/mobile",
+  "totals": {
+    "files": 11,
+    "mb": 7.65,
+    "triangles": 354389
+  },
+  "models": [
+    {
+      "id": "battery",
+      "file": "battery.glb",
+      "bytes": 510768,
+      "mb": 0.49,
+      "extensionsUsed": [
+        "EXT_meshopt_compression",
+        "EXT_texture_webp",
+        "KHR_mesh_quantization"
+      ],
+      "triangles": 16343,
+      "vertices": 27449,
+      "primitives": 1,
+      "bounds": {
+        "min": {
+          "x": -0.808,
+          "y": -0.9518,
+          "z": -0.4646
+        },
+        "max": {
+          "x": 0.8079,
+          "y": 0.9507,
+          "z": 0.464
+        },
+        "size": {
+          "x": 1.6159,
+          "y": 1.9025,
+          "z": 0.9286
+        },
+        "center": {
+          "x": -0.0001,
+          "y": -0.0005,
+          "z": -0.0003
+        }
+      },
+      "pivotRel": {
+        "x": 0.5,
+        "y": 0.5003,
+        "z": 0.5004
+      },
+      "longestAxis": "y",
+      "nodes": [
+        {
+          "name": "output_unwrapped",
+          "mesh": true,
+          "translation": [
+            -0.0001,
+            -0.0005,
+            -0.0003
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "scale": [
+            0.9513,
+            0.9513,
+            0.9513
+          ]
+        }
+      ],
+      "materials": [
+        {
+          "name": "BakedMaterial",
+          "alphaMode": "OPAQUE",
+          "doubleSided": true,
+          "baseColorFactor": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "metallic": 1,
+          "roughness": 1,
+          "maps": {
+            "baseColor": true,
+            "metallicRoughness": true,
+            "normal": false,
+            "emissive": false,
+            "occlusion": false
+          }
+        }
+      ],
+      "textures": [
+        {
+          "name": "texture_0",
+          "mimeType": "image/webp",
+          "width": 1024,
+          "height": 1024,
+          "kb": 142
+        },
+        {
+          "name": "texture_0_metallic_roughness",
+          "mimeType": "image/webp",
+          "width": 1024,
+          "height": 1024,
+          "kb": 70
+        }
+      ]
+    },
+    {
+      "id": "branch_apple",
+      "file": "branch_apple.glb",
+      "bytes": 713480,
+      "mb": 0.68,
+      "extensionsUsed": [
+        "EXT_meshopt_compression",
+        "EXT_texture_webp",
+        "KHR_mesh_quantization"
+      ],
+      "triangles": 39888,
+      "vertices": 34763,
+      "primitives": 1,
+      "bounds": {
+        "min": {
+          "x": -0.9473,
+          "y": -0.4831,
+          "z": -0.4478
+        },
+        "max": {
+          "x": 0.9511,
+          "y": 0.4996,
+          "z": 0.4407
+        },
+        "size": {
+          "x": 1.8984,
+          "y": 0.9827,
+          "z": 0.8886
+        },
+        "center": {
+          "x": 0.0019,
+          "y": 0.0082,
+          "z": -0.0036
+        }
+      },
+      "pivotRel": {
+        "x": 0.499,
+        "y": 0.4916,
+        "z": 0.504
+      },
+      "longestAxis": "x",
+      "nodes": [
+        {
+          "name": "",
+          "mesh": true,
+          "translation": [
+            0.0019,
+            0.0082,
+            -0.0036
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "scale": [
+            0.9492,
+            0.9492,
+            0.9492
+          ]
+        }
+      ],
+      "materials": [
+        {
+          "name": "",
+          "alphaMode": "OPAQUE",
+          "doubleSided": true,
+          "baseColorFactor": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "metallic": 1,
+          "roughness": 1,
+          "maps": {
+            "baseColor": true,
+            "metallicRoughness": true,
+            "normal": true,
+            "emissive": false,
+            "occlusion": false
+          }
+        }
+      ],
+      "textures": [
+        {
+          "name": "",
+          "mimeType": "image/webp",
+          "width": 1024,
+          "height": 1024,
+          "kb": 229
+        },
+        {
+          "name": "",
+          "mimeType": "image/webp",
+          "width": 1024,
+          "height": 1024,
+          "kb": 57
+        },
+        {
+          "name": "",
+          "mimeType": "image/webp",
+          "width": 1024,
+          "height": 1024,
+          "kb": 16
+        }
+      ]
+    },
+    {
+      "id": "branch_grape",
+      "file": "branch_grape.glb",
+      "bytes": 844656,
+      "mb": 0.81,
+      "extensionsUsed": [
+        "EXT_meshopt_compression",
+        "EXT_texture_webp",
+        "KHR_mesh_quantization"
+      ],
+      "triangles": 39766,
+      "vertices": 35735,
+      "primitives": 1,
+      "bounds": {
+        "min": {
+          "x": -0.9518,
+          "y": -0.5527,
+          "z": -0.3252
+        },
+        "max": {
+          "x": 0.9488,
+          "y": 0.5388,
+          "z": 0.3373
+        },
+        "size": {
+          "x": 1.9006,
+          "y": 1.0915,
+          "z": 0.6625
+        },
+        "center": {
+          "x": -0.0015,
+          "y": -0.007,
+          "z": 0.006
+        }
+      },
+      "pivotRel": {
+        "x": 0.5008,
+        "y": 0.5064,
+        "z": 0.4909
+      },
+      "longestAxis": "x",
+      "nodes": [
+        {
+          "name": "",
+          "mesh": true,
+          "translation": [
+            -0.0015,
+            -0.007,
+            0.006
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "scale": [
+            0.9503,
+            0.9503,
+            0.9503
+          ]
+        }
+      ],
+      "materials": [
+        {
+          "name": "",
+          "alphaMode": "OPAQUE",
+          "doubleSided": true,
+          "baseColorFactor": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "metallic": 1,
+          "roughness": 1,
+          "maps": {
+            "baseColor": true,
+            "metallicRoughness": true,
+            "normal": true,
+            "emissive": false,
+            "occlusion": false
+          }
+        }
+      ],
+      "textures": [
+        {
+          "name": "",
+          "mimeType": "image/webp",
+          "width": 1024,
+          "height": 1024,
+          "kb": 318
+        },
+        {
+          "name": "",
+          "mimeType": "image/webp",
+          "width": 1024,
+          "height": 1024,
+          "kb": 58
+        },
+        {
+          "name": "",
+          "mimeType": "image/webp",
+          "width": 1024,
+          "height": 1024,
+          "kb": 36
+        }
+      ]
+    },
+    {
+      "id": "branch_mango",
+      "file": "branch_mango.glb",
+      "bytes": 677876,
+      "mb": 0.65,
+      "extensionsUsed": [
+        "EXT_meshopt_compression",
+        "EXT_texture_webp",
+        "KHR_mesh_quantization"
+      ],
+      "triangles": 39892,
+      "vertices": 34848,
+      "primitives": 1,
+      "bounds": {
+        "min": {
+          "x": -0.9476,
+          "y": -0.5377,
+          "z": -0.5544
+        },
+        "max": {
+          "x": 0.9479,
+          "y": 0.5349,
+          "z": 0.54
+        },
+        "size": {
+          "x": 1.8954,
+          "y": 1.0726,
+          "z": 1.0943
+        },
+        "center": {
+          "x": 0.0001,
+          "y": -0.0014,
+          "z": -0.0072
+        }
+      },
+      "pivotRel": {
+        "x": 0.4999,
+        "y": 0.5013,
+        "z": 0.5066
+      },
+      "longestAxis": "x",
+      "nodes": [
+        {
+          "name": "",
+          "mesh": true,
+          "translation": [
+            0.0001,
+            -0.0014,
+            -0.0072
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "scale": [
+            0.9477,
+            0.9477,
+            0.9477
+          ]
+        }
+      ],
+      "materials": [
+        {
+          "name": "",
+          "alphaMode": "OPAQUE",
+          "doubleSided": true,
+          "baseColorFactor": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "metallic": 1,
+          "roughness": 1,
+          "maps": {
+            "baseColor": true,
+            "metallicRoughness": true,
+            "normal": true,
+            "emissive": false,
+            "occlusion": false
+          }
+        }
+      ],
+      "textures": [
+        {
+          "name": "",
+          "mimeType": "image/webp",
+          "width": 1024,
+          "height": 1024,
+          "kb": 207
+        },
+        {
+          "name": "",
+          "mimeType": "image/webp",
+          "width": 1024,
+          "height": 1024,
+          "kb": 38
+        },
+        {
+          "name": "",
+          "mimeType": "image/webp",
+          "width": 1024,
+          "height": 1024,
+          "kb": 13
+        }
+      ]
+    },
+    {
+      "id": "branch_orange",
+      "file": "branch_orange.glb",
+      "bytes": 688836,
+      "mb": 0.66,
+      "extensionsUsed": [
+        "EXT_meshopt_compression",
+        "EXT_texture_webp",
+        "KHR_mesh_quantization"
+      ],
+      "triangles": 39940,
+      "vertices": 34088,
+      "primitives": 1,
+      "bounds": {
+        "min": {
+          "x": -0.9493,
+          "y": -0.53,
+          "z": -0.4185
+        },
+        "max": {
+          "x": 0.9507,
+          "y": 0.5674,
+          "z": 0.4184
+        },
+        "size": {
+          "x": 1.9,
+          "y": 1.0974,
+          "z": 0.8369
+        },
+        "center": {
+          "x": 0.0007,
+          "y": 0.0187,
+          "z": -0.0001
+        }
+      },
+      "pivotRel": {
+        "x": 0.4996,
+        "y": 0.4829,
+        "z": 0.5001
+      },
+      "longestAxis": "x",
+      "nodes": [
+        {
+          "name": "",
+          "mesh": true,
+          "translation": [
+            0.0007,
+            0.0187,
+            -0.0001
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "scale": [
+            0.95,
+            0.95,
+            0.95
+          ]
+        }
+      ],
+      "materials": [
+        {
+          "name": "",
+          "alphaMode": "OPAQUE",
+          "doubleSided": true,
+          "baseColorFactor": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "metallic": 1,
+          "roughness": 1,
+          "maps": {
+            "baseColor": true,
+            "metallicRoughness": true,
+            "normal": true,
+            "emissive": false,
+            "occlusion": false
+          }
+        }
+      ],
+      "textures": [
+        {
+          "name": "",
+          "mimeType": "image/webp",
+          "width": 1024,
+          "height": 1024,
+          "kb": 232
+        },
+        {
+          "name": "",
+          "mimeType": "image/webp",
+          "width": 1024,
+          "height": 1024,
+          "kb": 33
+        },
+        {
+          "name": "",
+          "mimeType": "image/webp",
+          "width": 1024,
+          "height": 1024,
+          "kb": 20
+        }
+      ]
+    },
+    {
+      "id": "distribution_pipe",
+      "file": "distribution_pipe.glb",
+      "bytes": 417104,
+      "mb": 0.4,
+      "extensionsUsed": [
+        "EXT_meshopt_compression",
+        "EXT_texture_webp",
+        "KHR_mesh_quantization"
+      ],
+      "triangles": 19960,
+      "vertices": 16744,
+      "primitives": 1,
+      "bounds": {
+        "min": {
+          "x": -0.9509,
+          "y": -0.3258,
+          "z": -0.9497
+        },
+        "max": {
+          "x": 0.9502,
+          "y": 0.326,
+          "z": 0.9496
+        },
+        "size": {
+          "x": 1.9012,
+          "y": 0.6518,
+          "z": 1.8993
+        },
+        "center": {
+          "x": -0.0004,
+          "y": 0.0001,
+          "z": 0
+        }
+      },
+      "pivotRel": {
+        "x": 0.5002,
+        "y": 0.4999,
+        "z": 0.5
+      },
+      "longestAxis": "x",
+      "nodes": [
+        {
+          "name": "",
+          "mesh": true,
+          "translation": [
+            -0.0004,
+            0.0001,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "scale": [
+            0.9506,
+            0.9506,
+            0.9506
+          ]
+        }
+      ],
+      "materials": [
+        {
+          "name": "",
+          "alphaMode": "OPAQUE",
+          "doubleSided": true,
+          "baseColorFactor": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "metallic": 1,
+          "roughness": 1,
+          "maps": {
+            "baseColor": true,
+            "metallicRoughness": true,
+            "normal": true,
+            "emissive": false,
+            "occlusion": false
+          }
+        }
+      ],
+      "textures": [
+        {
+          "name": "",
+          "mimeType": "image/webp",
+          "width": 1024,
+          "height": 1024,
+          "kb": 145
+        },
+        {
+          "name": "",
+          "mimeType": "image/webp",
+          "width": 1024,
+          "height": 1024,
+          "kb": 41
+        },
+        {
+          "name": "",
+          "mimeType": "image/webp",
+          "width": 1024,
+          "height": 1024,
+          "kb": 33
+        }
+      ]
+    },
+    {
+      "id": "green_tank",
+      "file": "green_tank.glb",
+      "bytes": 564520,
+      "mb": 0.54,
+      "extensionsUsed": [
+        "EXT_meshopt_compression",
+        "EXT_texture_webp",
+        "KHR_mesh_quantization"
+      ],
+      "triangles": 19760,
+      "vertices": 33345,
+      "primitives": 1,
+      "bounds": {
+        "min": {
+          "x": -0.6615,
+          "y": -0.9513,
+          "z": -0.6516
+        },
+        "max": {
+          "x": 0.6636,
+          "y": 0.9505,
+          "z": 0.6505
+        },
+        "size": {
+          "x": 1.325,
+          "y": 1.9018,
+          "z": 1.3021
+        },
+        "center": {
+          "x": 0.001,
+          "y": -0.0004,
+          "z": -0.0005
+        }
+      },
+      "pivotRel": {
+        "x": 0.4992,
+        "y": 0.5002,
+        "z": 0.5004
+      },
+      "longestAxis": "y",
+      "nodes": [
+        {
+          "name": "output_unwrapped",
+          "mesh": true,
+          "translation": [
+            0.001,
+            -0.0004,
+            -0.0005
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "scale": [
+            0.9509,
+            0.9509,
+            0.9509
+          ]
+        }
+      ],
+      "materials": [
+        {
+          "name": "BakedMaterial",
+          "alphaMode": "OPAQUE",
+          "doubleSided": true,
+          "baseColorFactor": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "metallic": 1,
+          "roughness": 1,
+          "maps": {
+            "baseColor": true,
+            "metallicRoughness": true,
+            "normal": false,
+            "emissive": false,
+            "occlusion": false
+          }
+        }
+      ],
+      "textures": [
+        {
+          "name": "texture_0",
+          "mimeType": "image/webp",
+          "width": 1024,
+          "height": 1024,
+          "kb": 128
+        },
+        {
+          "name": "texture_0_metallic_roughness",
+          "mimeType": "image/webp",
+          "width": 1024,
+          "height": 1024,
+          "kb": 82
+        }
+      ]
+    },
+    {
+      "id": "nutrient_tank",
+      "file": "nutrient_tank.glb",
+      "bytes": 608460,
+      "mb": 0.58,
+      "extensionsUsed": [
+        "EXT_meshopt_compression",
+        "EXT_texture_webp",
+        "KHR_mesh_quantization"
+      ],
+      "triangles": 19986,
+      "vertices": 33357,
+      "primitives": 1,
+      "bounds": {
+        "min": {
+          "x": -0.7841,
+          "y": -0.9517,
+          "z": -0.7856
+        },
+        "max": {
+          "x": 0.7812,
+          "y": 0.95,
+          "z": 0.7834
+        },
+        "size": {
+          "x": 1.5653,
+          "y": 1.9017,
+          "z": 1.569
+        },
+        "center": {
+          "x": -0.0015,
+          "y": -0.0009,
+          "z": -0.0011
+        }
+      },
+      "pivotRel": {
+        "x": 0.5009,
+        "y": 0.5005,
+        "z": 0.5007
+      },
+      "longestAxis": "y",
+      "nodes": [
+        {
+          "name": "output_unwrapped",
+          "mesh": true,
+          "translation": [
+            -0.0015,
+            -0.0009,
+            -0.0011
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "scale": [
+            0.9509,
+            0.9509,
+            0.9509
+          ]
+        }
+      ],
+      "materials": [
+        {
+          "name": "BakedMaterial",
+          "alphaMode": "OPAQUE",
+          "doubleSided": true,
+          "baseColorFactor": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "metallic": 1,
+          "roughness": 1,
+          "maps": {
+            "baseColor": true,
+            "metallicRoughness": true,
+            "normal": false,
+            "emissive": false,
+            "occlusion": false
+          }
+        }
+      ],
+      "textures": [
+        {
+          "name": "texture_0",
+          "mimeType": "image/webp",
+          "width": 1024,
+          "height": 1024,
+          "kb": 155
+        },
+        {
+          "name": "texture_0_metallic_roughness",
+          "mimeType": "image/webp",
+          "width": 1024,
+          "height": 1024,
+          "kb": 83
+        }
+      ]
+    },
+    {
+      "id": "solar_panel",
+      "file": "solar_panel.glb",
+      "bytes": 726404,
+      "mb": 0.69,
+      "extensionsUsed": [
+        "EXT_meshopt_compression",
+        "EXT_texture_webp",
+        "KHR_mesh_quantization"
+      ],
+      "triangles": 20000,
+      "vertices": 34565,
+      "primitives": 1,
+      "bounds": {
+        "min": {
+          "x": -0.9501,
+          "y": -0.3979,
+          "z": -0.3355
+        },
+        "max": {
+          "x": 0.9503,
+          "y": 0.39,
+          "z": 0.3153
+        },
+        "size": {
+          "x": 1.9004,
+          "y": 0.7879,
+          "z": 0.6508
+        },
+        "center": {
+          "x": 0.0001,
+          "y": -0.004,
+          "z": -0.0101
+        }
+      },
+      "pivotRel": {
+        "x": 0.4999,
+        "y": 0.505,
+        "z": 0.5155
+      },
+      "longestAxis": "x",
+      "nodes": [
+        {
+          "name": "output_unwrapped",
+          "mesh": true,
+          "translation": [
+            0.0001,
+            -0.004,
+            -0.0101
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "scale": [
+            0.9502,
+            0.9502,
+            0.9502
+          ]
+        }
+      ],
+      "materials": [
+        {
+          "name": "BakedMaterial",
+          "alphaMode": "OPAQUE",
+          "doubleSided": true,
+          "baseColorFactor": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "metallic": 1,
+          "roughness": 1,
+          "maps": {
+            "baseColor": true,
+            "metallicRoughness": true,
+            "normal": false,
+            "emissive": false,
+            "occlusion": false
+          }
+        }
+      ],
+      "textures": [
+        {
+          "name": "texture_0",
+          "mimeType": "image/webp",
+          "width": 1024,
+          "height": 1024,
+          "kb": 229
+        },
+        {
+          "name": "texture_0_metallic_roughness",
+          "mimeType": "image/webp",
+          "width": 1024,
+          "height": 1024,
+          "kb": 130
+        }
+      ]
+    },
+    {
+      "id": "tree_crown",
+      "file": "tree_crown.glb",
+      "bytes": 1743076,
+      "mb": 1.66,
+      "extensionsUsed": [
+        "EXT_meshopt_compression",
+        "EXT_texture_webp",
+        "KHR_mesh_quantization"
+      ],
+      "triangles": 68910,
+      "vertices": 58820,
+      "primitives": 1,
+      "bounds": {
+        "min": {
+          "x": -0.9497,
+          "y": -0.6213,
+          "z": -0.9265
+        },
+        "max": {
+          "x": 0.9439,
+          "y": 0.6259,
+          "z": 0.9186
+        },
+        "size": {
+          "x": 1.8937,
+          "y": 1.2473,
+          "z": 1.8451
+        },
+        "center": {
+          "x": -0.0029,
+          "y": 0.0023,
+          "z": -0.0039
+        }
+      },
+      "pivotRel": {
+        "x": 0.5015,
+        "y": 0.4981,
+        "z": 0.5021
+      },
+      "longestAxis": "x",
+      "nodes": [
+        {
+          "name": "",
+          "mesh": true,
+          "translation": [
+            -0.0029,
+            0.0023,
+            -0.0039
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "scale": [
+            0.9468,
+            0.9468,
+            0.9468
+          ]
+        }
+      ],
+      "materials": [
+        {
+          "name": "",
+          "alphaMode": "OPAQUE",
+          "doubleSided": true,
+          "baseColorFactor": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "metallic": 1,
+          "roughness": 1,
+          "maps": {
+            "baseColor": true,
+            "metallicRoughness": true,
+            "normal": true,
+            "emissive": false,
+            "occlusion": false
+          }
+        }
+      ],
+      "textures": [
+        {
+          "name": "",
+          "mimeType": "image/webp",
+          "width": 2048,
+          "height": 2048,
+          "kb": 735
+        },
+        {
+          "name": "",
+          "mimeType": "image/webp",
+          "width": 2048,
+          "height": 2048,
+          "kb": 100
+        },
+        {
+          "name": "",
+          "mimeType": "image/webp",
+          "width": 2048,
+          "height": 2048,
+          "kb": 122
+        }
+      ]
+    },
+    {
+      "id": "trunk_base",
+      "file": "trunk_base.glb",
+      "bytes": 524796,
+      "mb": 0.5,
+      "extensionsUsed": [
+        "EXT_meshopt_compression",
+        "EXT_texture_webp",
+        "KHR_mesh_quantization"
+      ],
+      "triangles": 29944,
+      "vertices": 22294,
+      "primitives": 1,
+      "bounds": {
+        "min": {
+          "x": -0.639,
+          "y": -0.9522,
+          "z": -0.6264
+        },
+        "max": {
+          "x": 0.6384,
+          "y": 0.9512,
+          "z": 0.6236
+        },
+        "size": {
+          "x": 1.2774,
+          "y": 1.9034,
+          "z": 1.25
+        },
+        "center": {
+          "x": -0.0003,
+          "y": -0.0005,
+          "z": -0.0014
+        }
+      },
+      "pivotRel": {
+        "x": 0.5003,
+        "y": 0.5003,
+        "z": 0.5011
+      },
+      "longestAxis": "y",
+      "nodes": [
+        {
+          "name": "",
+          "mesh": true,
+          "translation": [
+            -0.0003,
+            -0.0005,
+            -0.0014
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "scale": [
+            0.9517,
+            0.9517,
+            0.9517
+          ]
+        }
+      ],
+      "materials": [
+        {
+          "name": "",
+          "alphaMode": "OPAQUE",
+          "doubleSided": true,
+          "baseColorFactor": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "metallic": 1,
+          "roughness": 1,
+          "maps": {
+            "baseColor": true,
+            "metallicRoughness": true,
+            "normal": true,
+            "emissive": false,
+            "occlusion": false
+          }
+        }
+      ],
+      "textures": [
+        {
+          "name": "",
+          "mimeType": "image/webp",
+          "width": 1024,
+          "height": 1024,
+          "kb": 218
+        },
+        {
+          "name": "",
+          "mimeType": "image/webp",
+          "width": 1024,
+          "height": 1024,
+          "kb": 27
+        },
+        {
+          "name": "",
+          "mimeType": "image/webp",
+          "width": 1024,
+          "height": 1024,
+          "kb": 21
+        }
+      ]
+    }
+  ]
+}

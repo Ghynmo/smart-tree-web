@@ -1,0 +1,106 @@
+<!doctype html>
+<!-- Dev-only tool (not part of the build): compares models_src vs desktop vs mobile.
+     Open with `npm run dev`, then http://localhost:5173/tools/compare.html -->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Model compare</title>
+    <style>
+      html, body { margin: 0; block-size: 100%; background: #20262b; color: #eee; font: 14px system-ui, sans-serif; overflow: hidden; }
+      #bar { position: fixed; inset-block-start: 0; inset-inline: 0; display: flex; gap: 12px; align-items: center; padding: 8px 12px; background: #0008; z-index: 1; flex-wrap: wrap; }
+      #cols { position: fixed; inset-block-end: 12px; inset-inline: 0; display: grid; grid-template-columns: repeat(3, 1fr); text-align: center; pointer-events: none; }
+      #cols div { white-space: pre; }
+      select, button, label { font: inherit; }
+    </style>
+  </head>
+  <body>
+    <div id="bar">
+      <select id="model"></select>
+      <label><input type="checkbox" id="wire" /> wireframe</label>
+      <span id="status"></span>
+    </div>
+    <div id="cols"><div id="c0">original</div><div id="c1">desktop</div><div id="c2">mobile</div></div>
+    <script type="module">
+      import * as THREE from 'three'
+      import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
+      import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
+      import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js'
+      import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js'
+
+      const MODULES = {
+        trunk_base: 'trunk_base.glb', green_tank: 'green_tank.glb', distribution_pipe: 'distribution_pipe.glb',
+        nutrient_tank: 'nutrient_tank.glb', battery: 'opt_battery.glb', tree_crown: 'tree_crown.glb',
+        solar_panel: 'solar_panel.glb', branch_apple: 'branch_apple.glb', branch_mango: 'branch_mango.glb',
+        branch_grape: 'branch_grape.glb', branch_orange: 'branch_orange.glb',
+      }
+      const SPACING = 2.2
+
+      const renderer = new THREE.WebGLRenderer({ antialias: true })
+      renderer.setPixelRatio(Math.min(devicePixelRatio, 2))
+      renderer.setSize(innerWidth, innerHeight)
+      renderer.toneMapping = THREE.ACESFilmicToneMapping
+      document.body.appendChild(renderer.domElement)
+
+      const scene = new THREE.Scene()
+      scene.background = new THREE.Color(0x20262b)
+      scene.environment = new THREE.PMREMGenerator(renderer).fromScene(new RoomEnvironment()).texture
+      const camera = new THREE.PerspectiveCamera(35, innerWidth / innerHeight, 0.01, 100)
+      camera.position.set(0, 0.6, 7)
+      const controls = new OrbitControls(camera, renderer.domElement)
+      controls.enableDamping = true
+
+      const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder)
+      const select = document.getElementById('model')
+      const wire = document.getElementById('wire')
+      const status = document.getElementById('status')
+      for (const id of Object.keys(MODULES)) select.add(new Option(id, id))
+      select.value = new URLSearchParams(location.search).get('m') ?? 'tree_crown'
+
+      let group = null
+      const countTris = (obj) => {
+        let n = 0
+        obj.traverse((o) => o.isMesh && (n += (o.geometry.index?.count ?? o.geometry.attributes.position.count) / 3))
+        return n
+      }
+
+      async function show(id) {
+        status.textContent = 'loading…'
+        if (group) {
+          scene.remove(group)
+          group.traverse((o) => { if (o.isMesh) { o.geometry.dispose(); o.material.map?.dispose(); o.material.dispose() } })
+        }
+        group = new THREE.Group()
+        scene.add(group)
+        const urls = [`/models_src/${MODULES[id]}`, `/models/desktop/${id}.glb`, `/models/mobile/${id}.glb`]
+        const t0 = performance.now()
+        const gltfs = await Promise.all(urls.map((u) => loader.loadAsync(u)))
+        gltfs.forEach((g, i) => {
+          g.scene.position.x = (i - 1) * SPACING
+          group.add(g.scene)
+          const bytes = performance.getEntriesByName(new URL(urls[i], location.href).href).at(-1)?.decodedBodySize
+          document.getElementById(`c${i}`).textContent =
+            `${['original', 'desktop', 'mobile'][i]}\n${countTris(g.scene).toLocaleString('en-US')} tris` +
+            (bytes ? `  ·  ${(bytes / 1048576).toFixed(2)} MB` : '')
+        })
+        applyWire()
+        status.textContent = `loaded in ${Math.round(performance.now() - t0)} ms`
+        history.replaceState(null, '', `?m=${id}`)
+      }
+
+      function applyWire() {
+        group?.traverse((o) => o.isMesh && (o.material.wireframe = wire.checked))
+      }
+
+      select.onchange = () => show(select.value)
+      wire.onchange = applyWire
+      addEventListener('resize', () => {
+        camera.aspect = innerWidth / innerHeight
+        camera.updateProjectionMatrix()
+        renderer.setSize(innerWidth, innerHeight)
+      })
+      renderer.setAnimationLoop(() => { controls.update(); renderer.render(scene, camera) })
+      show(select.value)
+    </script>
+  </body>
+</html>

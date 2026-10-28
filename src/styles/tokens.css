@@ -1,0 +1,74 @@
+/* Design tokens — "Senja Gurun Arafah": dusk over the desert plain, gold hairlines, living green.
+   Colors, type, radii and motion live here only; components never hard-code them. */
+:root {
+  --font: 'Cairo', system-ui, 'Segoe UI', Tahoma, sans-serif;
+  --font-display: 'Reem Kufi', 'Cairo', system-ui, sans-serif;
+
+  /* Sky (the CSS backdrop behind the transparent 3D canvas) */
+  --sky-top: #12131f;
+  --sky-mid: #2a1f2e;
+  --sky-glow: #8a5a3c;
+  --bg: var(--sky-top);
+
+  /* Surfaces: warm smoked glass */
+  --surface: rgb(22 18 28 / 0.66);
+  --surface-strong: rgb(22 18 28 / 0.86);
+  --surface-solid: rgb(24 20 30 / 0.95); /* large panels: no backdrop blur (see overlay.css) */
+  --surface-opaque: #18141e; /* popovers above other panels */
+  --surface-raised: rgb(244 234 216 / 0.04);
+  --border: rgb(244 234 216 / 0.1);
+  --hairline: rgb(201 164 92 / 0.35);
+  --hairline-strong: rgb(201 164 92 / 0.7);
+
+  /* Ink */
+  --text: #f4ead8;
+  --text-muted: #bfb29a;
+  --text-faint: #8d826f;
+
+  /* Accents: gold = brand / structure, green = life / action */
+  --gold: #c9a45c;
+  --gold-soft: rgb(201 164 92 / 0.16);
+  --olive: #5f8f4e;
+  --leaf: #8fc46a;
+  --leaf-soft: rgb(143 196 106 / 0.16);
+  --accent: var(--leaf);
+  --accent-ink: #14200f;
+  --sand: #d9c39a;
+  --sky-blue: #9fb6d9; /* "Smart Technology" pillar */
+
+  /* "Data demo" / R&D: warning amber, always paired with an icon + text, never color alone */
+  --demo: #ffb547;
+  --demo-ink: #2a1a00;
+  --demo-soft: rgb(255 181 71 / 0.08);
+
+  /* Shape */
+  --radius-sm: 10px;
+  --radius: 18px;
+  --radius-pill: 999px;
+  --gap: 16px;
+  --gap-sm: 8px;
+  --blur: blur(14px) saturate(1.2);
+  --shadow: 0 1px 0 rgb(244 234 216 / 0.06) inset, 0 18px 40px -12px rgb(0 0 0 / 0.55);
+
+  /* Type scale */
+  --fs-xs: 0.75rem;
+  --fs-sm: 0.875rem;
+  --fs-md: 1rem;
+  --fs-lg: 1.25rem;
+  --fs-xl: clamp(1.6rem, 2.6vw, 2.1rem);
+  --fs-hero: clamp(2.6rem, 6.5vw, 4.75rem);
+  --tracking-kicker: 0.14em;
+
+  /* Motion (CSS side; springs for JS live in src/ui/motion.js) */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 160ms;
+  --dur: 320ms;
+}
+
+/* Low quality tier (phones, weak GPUs): no backdrop blur at all (it is re-computed every frame while
+   the 3D view animates under a panel), denser glass instead, no pointer glow. Set by src/ui/backdrop.js. */
+body[data-quality='low'] {
+  --blur: none;
+  --surface: rgb(22 18 28 / 0.84);
+  --surface-strong: rgb(22 18 28 / 0.92);
+}
